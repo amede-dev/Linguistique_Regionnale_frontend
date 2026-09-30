@@ -48,6 +48,15 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   String _fmt(int s) => '00:${s.toString().padLeft(2, '0')} / 00:$_maxSec';
 
+  Widget _step(String title, String subtitle) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(children: [
+          Expanded(child: Text(title, style: ts(17, w7))),
+          Text(subtitle, style: ts(11, w6, color: C.primary)),
+        ]),
+      );
+
+
   void _toggleRecord() {
     if (_rec == _Rec.recording) {
       _timer?.cancel();
@@ -300,7 +309,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
               decoration: fieldDec('Sélectionnez votre terroir',
                   icon: Icons.location_on_outlined),
               items: [
-                for (final d in _places)
+                for (final d in appState.regions.map((r) => r.name))
                   DropdownMenuItem(
                       value: d,
                       child: Text(d,
@@ -324,7 +333,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
                         Text('Validation communautaire garantie',
                             style: ts(13, w7, color: C.onSecondaryContainer)),
                         Text(
-                            'Validation locale uniquement dans cette version de démonstration.',
+                            'Votre proposition sera enregistrée et examinée par les linguistes.',
                             style: ts(12, w4, color: C.onSecondaryContainer)),
                       ]),
                 ),
