@@ -28,13 +28,47 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _busy = false;
   String? _error;
+  Future<void> _googleLogin() async {
+    if (_busy) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await appState.loginWithGoogle();
+      if (mounted) goHome(context);
+    } on DioException catch (e) {
+      if (mounted)
+        setState(() => _error = 'Connexion Google impossible (' +
+            (e.response?.statusCode ?? 'réseau').toString() +
+            ').');
+    } catch (e) {
+      if (mounted && !e.toString().contains('annulée'))
+        setState(() => _error = 'Connexion Google impossible.');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   Future<void> _submit() async {
     if (!_key.currentState!.validate() || _busy) return;
-    setState(() { _busy = true; _error = null; });
-    try { await appState.login(_email.text, _pwd.text); if (mounted) goHome(context); }
-    on DioException catch (e) { if (mounted) setState(() => _error = e.response?.statusCode == 401 ? 'E-mail ou mot de passe incorrect.' : 'Serveur indisponible.'); }
-    catch (_) { if (mounted) setState(() => _error = 'Connexion impossible.'); }
-    finally { if (mounted) setState(() => _busy = false); }
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await appState.login(_email.text, _pwd.text);
+      if (mounted) goHome(context);
+    } on DioException catch (e) {
+      if (mounted)
+        setState(() => _error = e.response?.statusCode == 401
+            ? 'E-mail ou mot de passe incorrect.'
+            : 'Serveur indisponible.');
+    } catch (_) {
+      if (mounted) setState(() => _error = 'Connexion impossible.');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   @override
@@ -42,18 +76,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: C.onSurface),
-        title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-          decoration: BoxDecoration(
-            color: a(C.secondary, .15),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Icon(Icons.travel_explore, size: 16, color: C.secondary),
-            const SizedBox(width: 6),
-            Text('Recherche de mots', style: ts(12, w6, color: C.secondary)),
-          ]),
-        ),
+        title: Row(mainAxisSize: MainAxisSize.min, children: [
+          const LogoMark(size: 28),
+          const SizedBox(width: 6),
+          Text('LANGUE MALGACHE', style: ts(13, w7, color: C.primary, ls: .4)),
+        ]),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -63,31 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _key,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
-                child: Column(children: [
-                  const LogoMark(size: 64),
-                  const SizedBox(height: 8),
-                  Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('LANGUE MALGACHE',
-                            style: ts(20, w7, color: C.primary, ls: 1.5)),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: a(C.tertiary, .15),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text('Patrimoine vivant',
-                              style: ts(11, w6, color: C.tertiary)),
-                        ),
-                      ]),
-                ]),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Text('Bienvenue !', style: ts(24, w7)),
               const SizedBox(height: 4),
               Text(
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SocialBtn(
                   'Continuer avec Google',
                   Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => toast(context, 'Connexion Google non configurée.')),
+                  _googleLogin),
               const OrDivider('ou avec votre adresse e-mail'),
               const FieldLabel('Adresse e-mail'),
               TextFormField(

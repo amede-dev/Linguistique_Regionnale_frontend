@@ -42,13 +42,48 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool _busy = false;
   String? _error;
+  Future<void> _googleSignup() async {
+    if (_busy) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await appState.loginWithGoogle();
+      if (mounted) goHome(context);
+    } on DioException catch (e) {
+      if (mounted)
+        setState(() => _error = 'Inscription Google impossible (' +
+            (e.response?.statusCode ?? 'réseau').toString() +
+            ').');
+    } catch (e) {
+      if (mounted && !e.toString().contains('annulée'))
+        setState(() => _error = 'Inscription Google impossible.');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   Future<void> _submit() async {
     if (!_key.currentState!.validate() || _busy) return;
-    setState(() { _busy = true; _error = null; });
-    try { await appState.register(_name.text, _email.text, _pwd.text, region: _dialect); if (mounted) goHome(context); }
-    on DioException catch (e) { if (mounted) setState(() => _error = e.response?.statusCode == 409 ? 'Cet e-mail est déjà utilisé.' : 'Inscription impossible.'); }
-    catch (_) { if (mounted) setState(() => _error = 'Inscription impossible.'); }
-    finally { if (mounted) setState(() => _busy = false); }
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await appState.register(_name.text, _email.text, _pwd.text,
+          region: _dialect);
+      if (mounted) goHome(context);
+    } on DioException catch (e) {
+      if (mounted)
+        setState(() => _error = e.response?.statusCode == 409
+            ? 'Cet e-mail est déjà utilisé.'
+            : 'Inscription impossible.');
+    } catch (_) {
+      if (mounted) setState(() => _error = 'Inscription impossible.');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   @override
@@ -59,16 +94,10 @@ class _SignupScreenState extends State<SignupScreen> {
         leading: const BackButton(color: C.onSurface),
         title: Row(mainAxisSize: MainAxisSize.min, children: [
           const LogoMark(size: 28),
-          const SizedBox(width: 8),
-          Text('LANGUE MALGACHE', style: ts(15, w7, color: C.primary, ls: 1)),
+          const SizedBox(width: 6),
+          Text('LANGUE MALGACHE', style: ts(13, w7, color: C.primary, ls: .4)),
         ]),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.public, color: C.onSurface),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -103,7 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
               SocialBtn(
                   "S'inscrire avec Google",
                   Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => toast(context, 'Inscription Google non configurée.')),
+                  _googleSignup),
               const OrDivider('ou avec votre adresse e-mail'),
               const FieldLabel('Nom complet ou pseudonyme', trailing: 'Public'),
               TextFormField(
