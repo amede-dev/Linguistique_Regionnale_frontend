@@ -49,6 +49,7 @@ class AppState extends ChangeNotifier {
     userEmail = '${r['email'] ?? email}';
     userName = '${r['name'] ?? ''}';
     loggedIn = true;
+    await loadProfile();
     await loadCatalog();
     await loadFavorites();
   }
@@ -59,6 +60,7 @@ class AppState extends ChangeNotifier {
     userEmail = r['email'] ?? '';
     userName = r['name'] ?? '';
     loggedIn = true;
+    await loadProfile();
     await loadCatalog();
     await loadFavorites();
   }
@@ -72,6 +74,7 @@ class AppState extends ChangeNotifier {
     userEmail = '${r['email'] ?? email}';
     userRegion = region ?? '';
     loggedIn = true;
+    await loadProfile();
     await loadCatalog();
     notifyListeners();
   }
@@ -175,8 +178,31 @@ class AppState extends ChangeNotifier {
   }
 
   String? profilePhoto;
-  void setProfilePhoto(String? p) {
-    profilePhoto = p;
+
+  Future<void> loadProfile() async {
+    try {
+      final p = await apiClient.profile();
+      userName = '${p['name'] ?? userName}';
+      userEmail = '${p['email'] ?? userEmail}';
+      userRegion = '${p['region'] ?? ''}';
+      final photo = '${p['photo_url'] ?? ''}';
+      profilePhoto = photo.isEmpty ? null : photo;
+      notifyListeners();
+    } catch (_) {
+      // Le profil reste utilisable même si l'URL de photo est indisponible.
+    }
+  }
+
+  Future<void> setProfilePhoto(String path) async {
+    final p = await apiClient.uploadProfilePhoto(path);
+    final photo = '${p['photo_url'] ?? ''}';
+    profilePhoto = photo.isEmpty ? null : photo;
+    notifyListeners();
+  }
+
+  Future<void> deleteProfilePhoto() async {
+    await apiClient.deleteProfilePhoto();
+    profilePhoto = null;
     notifyListeners();
   }
 

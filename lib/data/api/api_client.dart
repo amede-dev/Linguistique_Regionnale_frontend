@@ -6,7 +6,7 @@ class ApiClient {
       : _dio = Dio(BaseOptions(
           baseUrl: baseUrl ??
               const String.fromEnvironment('API_BASE_URL',
-                  defaultValue: 'http://10.0.2.2:8080/api'),
+                  defaultValue: 'https://linguistique-regionnale-backend.onrender.com/api'),
           connectTimeout: const Duration(seconds: 8),
           receiveTimeout: const Duration(seconds: 12),
           headers: {'Content-Type': 'application/json'},
@@ -45,6 +45,17 @@ class ApiClient {
             data: {'idToken': token}))
         .data!;
   }
+
+  Future<Map<String, dynamic>> profile() async =>
+      (await _dio.get<Map<String, dynamic>>('/profile')).data!;
+
+  Future<Map<String, dynamic>> uploadProfilePhoto(String path) async {
+    final form = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
+    return (await _dio.put<Map<String, dynamic>>('/profile/photo', data: form)).data!;
+  }
+
+  Future<Map<String, dynamic>> deleteProfilePhoto() async =>
+      (await _dio.delete<Map<String, dynamic>>('/profile/photo')).data!;
 
   Future<List<dynamic>> regions() async =>
       (await _dio.get<List<dynamic>>('/regions')).data!;

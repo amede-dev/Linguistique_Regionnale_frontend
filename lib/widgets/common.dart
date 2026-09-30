@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/i18n.dart';
@@ -248,9 +247,7 @@ class TabHeader extends StatelessWidget {
       );
 }
 
-/// Avatar de l'utilisateur : photo de profil si elle existe, sinon les
-/// initiales du nom. Utilisé partout (en-tête, profil...) pour rester
-/// toujours synchronisé.
+/// Avatar chargé depuis l'URL serveur, ou initiales si aucune photo n'existe.
 class UserAvatar extends StatelessWidget {
   final double radius;
   const UserAvatar({super.key, this.radius = 16});
@@ -270,7 +267,7 @@ class UserAvatar extends StatelessWidget {
           return CircleAvatar(
             radius: radius,
             backgroundColor: C.primaryFixed,
-            backgroundImage: path != null ? FileImage(File(path)) : null,
+            backgroundImage: path != null ? NetworkImage(path) : null,
             child: path == null
                 ? Text(initials, style: ts(radius * .7, w7, color: C.primary))
                 : null,

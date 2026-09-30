@@ -54,7 +54,10 @@ class ProfileScreen extends StatelessWidget {
         maxWidth: 1024,
         imageQuality: 85,
       );
-      if (file != null) appState.setProfilePhoto(file.path);
+      if (file != null) {
+        await appState.setProfilePhoto(file.path);
+        if (context.mounted) toast(context, 'Photo enregistrée sur le serveur');
+      }
     } catch (_) {
       if (context.mounted) toast(context, "Impossible d'accéder à la photo");
     }
@@ -92,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                   Text('Supprimer la photo', style: ts(14, w6, color: C.error)),
               onTap: () {
                 Navigator.pop(sheetCtx);
-                appState.setProfilePhoto(null);
+                appState.deleteProfilePhoto();
               },
             ),
           const SizedBox(height: 8),
