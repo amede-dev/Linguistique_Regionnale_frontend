@@ -11,16 +11,16 @@ void main() {
     systemNavigationBarColor: C.surface,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  runApp(const TenyGasyApp());
+  runApp(const LinguistiqueRegionnaleApp());
 }
 
-class TenyGasyApp extends StatelessWidget {
-  const TenyGasyApp({super.key});
+class LinguistiqueRegionnaleApp extends StatelessWidget {
+  const LinguistiqueRegionnaleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Teny Gasy',
+      title: 'Linguistique Régionale',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
       home: const OnboardingScreen(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Palette « Terre & Nature » (Tany Mena) issue du design system Teny Gasy.
+/// Palette « Terre & Nature » (Tany Mena) issue du design system Linguistique Régionale.
 class C {
   static const surface = Color(0xFFFDF9F2);
   static const lowest = Color(0xFFFFFFFF);

@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Teny Gasy</string>
+	<string>Linguistique Régionale</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>teny_gasy</string>
+	<string>linguistique_regionnale</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -50,9 +50,9 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Teny Gasy a besoin d'accéder à vos photos pour choisir votre photo de profil.</string>
+	<string>Linguistique Régionale a besoin d'accéder à vos photos pour choisir votre photo de profil.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Teny Gasy a besoin d'accéder à l'appareil photo pour prendre votre photo de profil.</string>
+	<string>Linguistique Régionale a besoin d'accéder à l'appareil photo pour prendre votre photo de profil.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

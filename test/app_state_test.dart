@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teny_gasy/core/app_state.dart';
-import 'package:teny_gasy/data/mock_data.dart';
+import 'package:linguistique_regionnale/core/app_state.dart';
+import 'package:linguistique_regionnale/data/mock_data.dart';
 
 void main() {
   test('toggleFav ajoute puis retire un favori', () {

@@ -227,7 +227,7 @@ const Map<String, String> _mg = {
   'Prendre une photo': 'Maka sary',
   'Supprimer la photo': 'Fafana ny sary',
   "Impossible d'accéder à la photo": "Tsy afaka miditra amin'ny sary",
-  'Langue malgache • Version 1.2.0': 'Teny Gasy • Andiany 1.2.0',
+  'Langue malgache • Version 1.2.0': 'Linguistique Régionale • Andiany 1.2.0',
   'Aucune nouvelle notification': 'Tsy misy fampilazana vaovao',
 
   // Connexion / inscription
@@ -263,7 +263,7 @@ const Map<String, String> _mg = {
   'Charte de préservation linguistique': 'Fitsipika fiarovana ny fiteny',
   'et les': 'sy ny',
   "Conditions d'utilisation": 'Fepetra fampiasana',
-  'de Teny Gasy.': "an'i Teny Gasy.",
+  'de Linguistique Régionale.': "an'i Linguistique Régionale.",
   "Veuillez accepter la charte et les conditions d'utilisation":
       'Ekeo azafady ny fitsipika sy ny fepetra fampiasana',
   "Région ou dialecte d'attache": 'Faritra na fitenim-paritra tiana',
@@ -278,20 +278,20 @@ const Map<String, String> _mg = {
   'Connectez-vous pour retrouver vos favoris, synchroniser vos audios et participer à la communauté.':
       "Midira mba hahitana ny ankafizinao, hampifanaraka ny feo ary handray anjara amin'ny fiarahamonina.",
   'Astuce de connexion': "Toro-hevitra momba ny fidirana",
-  "Si vous avez utilisé Google pour vous inscrire sur Teny Gasy, connectez-vous directement via le bouton Google sans mot de passe.":
+  "Si vous avez utilisé Google pour vous inscrire sur Linguistique Régionale, connectez-vous directement via le bouton Google sans mot de passe.":
       "Raha Google no nampiasainao tamin'ny fisoratana anarana, midira mivantana amin'ny bokotra Google tsy misy teny miafina.",
   'Retour à la connexion': "Miverina amin'ny fidirana",
   'Retour à la page de connexion': "Miverina any amin'ny pejy fidirana",
   'Envoyer le lien de réinitialisation': 'Alefaso ny rohy famerenana',
   'Réinitialiser': 'Hamerina',
   'Demande envoyée': 'Nalefa ny fangatahana',
-  'Sécurité Teny Gasy': 'Filaminana Teny Gasy',
-  "Ne vous inquiétez pas ! Saisissez l'adresse e-mail associée à votre compte Teny Gasy. Nous vous enverrons un lien magique ou un code sécurisé pour réinitialiser votre accès.":
-      "Aza manahy! Ampidiro ny adiresy mailaka mifandray amin'ny kaontinao Teny Gasy. Handefa rohy na kaody azo antoka izahay hamerenana ny fidiranao.",
+  'Sécurité Linguistique Régionale': 'Filaminana Linguistique Régionale',
+  "Ne vous inquiétez pas ! Saisissez l'adresse e-mail associée à votre compte Linguistique Régionale. Nous vous enverrons un lien magique ou un code sécurisé pour réinitialiser votre accès.":
+      "Aza manahy! Ampidiro ny adiresy mailaka mifandray amin'ny kaontinao Linguistique Régionale. Handefa rohy na kaody azo antoka izahay hamerenana ny fidiranao.",
   'Sécurisé par Supabase Auth • Chiffrement de bout en bout':
       "Voaaro amin'ny Supabase Auth • Fanafenana tanteraka",
-  'Support communautaire : aide@tenygasy.mg':
-      "Fanampiana avy amin'ny fiarahamonina : aide@tenygasy.mg",
+  'Support communautaire : aide@linguistique-regionnale.app':
+      "Fanampiana avy amin'ny fiarahamonina : aide@linguistique-regionnale.app",
 
   // Présentation
   "Commencer l'exploration": "Atombohy ny fikarohana",
@@ -471,7 +471,7 @@ const Map<String, String> _mg = {
   'Bienvenue !': 'Tongasoa eto !',
   'Patrimoine vivant': 'Lova Velona',
   'Patrimoine intellectuel de Madagascar': "Tahirin-tsain'ny Nosy Madagasikara",
-  'LANGUE MALGACHE': 'TENY GASY',
+  'LANGUE MALGACHE': 'LINGUISTIQUE RÉGIONALE',
   'Recherche de mots': 'Fikarohana Teny',
   'PATRIMOINE NATIONAL VIVANT': 'HAREM-PIRENENA VELONA',
   '6 provinces': '6 Faritany',

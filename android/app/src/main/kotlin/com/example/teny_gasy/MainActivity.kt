@@ -1,4 +1,4 @@
-package com.example.teny_gasy
+package com.example.linguistique_regionnale
 
 import io.flutter.embedding.android.FlutterActivity
 

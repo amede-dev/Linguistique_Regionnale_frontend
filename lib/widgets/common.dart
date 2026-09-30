@@ -200,7 +200,7 @@ class FieldLabel extends StatelessWidget {
 /// En-tête des écrans à onglets.
 class TabHeader extends StatelessWidget {
   final String title;
-  final bool showBrand; // texte "TENY GASY"
+  final bool showBrand; // texte "LINGUISTIQUE RÉGIONALE"
   final bool showNotification; // icône cloche
 
   const TabHeader({

@@ -1,52 +1,106 @@
-# Teny Gasy – application Flutter
+# Linguistique Régionale — application Flutter
 
-Encyclopédie sonore des 18 dialectes de Madagascar. Projet Flutter converti à partir du prototype HTML `teny_gasy_app.html` (11 écrans, design system « Terre & Nature »).
+Application mobile Flutter dédiée à la découverte, la recherche et la contribution autour des mots et expressions des régions et dialectes de Madagascar.
 
-## Démarrer
+Le projet comprend une application Android/iOS et une API Spring Boot connectée à Supabase.
+
+## Fonctionnalités
+
+- Onboarding, inscription et connexion avec JWT.
+- Consultation des régions, mots et expressions.
+- Recherche par terme, région et type.
+- Détails des mots et variantes régionales.
+- Gestion des favoris synchronisés avec le compte utilisateur.
+- Contribution de nouveaux mots et expressions.
+- Interface multilingue français/malgache.
+
+## Architecture
+
+| Partie | Technologie | Dépôt |
+|---|---|---|
+| Application mobile | Flutter / Dart | `Linguistique_Regionnale_frontend` |
+| API | Spring Boot / Java 21 | `Linguistique_Regionnale_backend` |
+| Base de données | PostgreSQL / Supabase | Projet Supabase |
+
+## Prérequis
+
+- Flutter 3.22 ou version supérieure.
+- Dart 3.4 ou version supérieure.
+- Java 21 pour le backend.
+- Un téléphone Android avec le débogage USB activé pour les tests physiques.
+
+## Lancer l'application Flutter
+
+Depuis le dossier frontend :
 
 ```bash
-flutter create . --platforms=android,ios   # génère les dossiers android/ et ios/ (une seule fois)
 flutter pub get
-flutter run
-flutter test
+flutter run -d 079354024K002703 \
+  --dart-define=API_BASE_URL=https://linguistique-regionnale-backend.onrender.com/api
 ```
-Prérequis : Flutter ≥ 3.22 (Dart ≥ 3.4).
 
-## Structure
-
-| Dossier | Contenu |
-|---|---|
-| `lib/core/` | `theme.dart` (palette, typo Plus Jakarta Sans), `app_state.dart` (favoris, auth, lecteur audio simulé), `nav.dart` |
-| `lib/data/` | `models.dart`, `mock_data.dart` (mots, régions, variantes) |
-| `lib/widgets/` | composants partagés : `AudioBar`, `WordCard`, `ChipsRow`, `PBtn`, `CtaCard`, champs et onglets d'auth |
-| `lib/screens/` | Onboarding, Connexion, Inscription, Mot de passe oublié, `MainShell` (5 onglets : Accueil, Recherche, Régions, Favoris, Profil), Détail du mot, Contribuer |
-
-## Ce qui fonctionne
-
-- Parcours complet : Bienvenue → Inscription/Connexion (validation des formulaires) → application à 5 onglets → déconnexion.
-- Recherche avec filtres région / type, tri (pertinence, Nord→Sud, popularité) et recherche texte.
-- Favoris synchronisés entre tous les écrans (cœur/signet), retrait, filtres.
-- Fiche mot avec variantes régionales filtrables, copie du terme, analyse étymologique.
-- Contribution : formulaire et studio vocal de démonstration locale, avec validation des champs.
-- Lecteur audio à forme d'onde, progression et vitesse (1.0x / 1.5x / 0.75x) – **simulé**.
-
-## À brancher ensuite
-
-- **Backend** : le prototype mentionne Supabase Auth. Remplacer les données de `mock_data.dart` et l'état de `app_state.dart` par des appels Supabase (`supabase_flutter`).
-- **Audio réel** : intégrer `just_audio` (lecture) et `record` (micro) à la place des minuteurs simulés (`AppState.togglePlay`, `_toggleRecord`).
-- **Partage / export** : `share_plus` et `pdf` pour « Partager » et « Exporter (.pdf) ».
-
-## Backend local
-
-Le dossier `backend/` contient l'API Spring Boot et le schéma SQL Supabase.
+Remplacez `079354024K002703` par l'identifiant retourné par :
 
 ```bash
-cd backend
-export SUPABASE_DB_URL="jdbc:postgresql://..."
-export SUPABASE_DB_USER="postgres"
-export SUPABASE_DB_PASSWORD="..."
-export JWT_SECRET="une-cle-secrete-d-au-moins-32-caracteres"
-mvn spring-boot:run
+flutter devices
 ```
 
-Pour Android : `flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8080/api`
+## Générer l'APK Android
+
+```bash
+flutter build apk --release \
+  --dart-define=API_BASE_URL=https://linguistique-regionnale-backend.onrender.com/api
+```
+
+L'APK est généré dans :
+
+```text
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+## Backend distant
+
+L'API de production est disponible à l'adresse :
+
+```text
+https://linguistique-regionnale-backend.onrender.com
+```
+
+Exemples de routes :
+
+```text
+GET  /api/regions
+GET  /api/words
+POST /api/auth/register
+POST /api/auth/login
+```
+
+Le backend est déployé sur Render avec Docker. Les variables suivantes sont configurées sur la plateforme et ne doivent pas être ajoutées au dépôt GitHub :
+
+```text
+SUPABASE_DB_URL
+SUPABASE_DB_USER
+SUPABASE_DB_PASSWORD
+JWT_SECRET
+CORS_ORIGIN
+```
+
+## Développement local du backend
+
+```bash
+cd Linguistique_Regionnale_backend
+export SUPABASE_DB_URL="jdbc:postgresql://..."
+export SUPABASE_DB_USER="postgres.votre_project_ref"
+export SUPABASE_DB_PASSWORD="votre_mot_de_passe"
+export JWT_SECRET="une-cle-secrete-de-plus-de-32-caracteres"
+SERVER_PORT=8082 ./mvnw spring-boot:run
+```
+
+## Dépôts GitHub
+
+- Frontend : `https://github.com/amede-dev/Linguistique_Regionnale_frontend`
+- Backend : `https://github.com/amede-dev/Linguistique_Regionnale_backend`
+
+## Sécurité
+
+Ne publiez jamais les mots de passe Supabase, le fichier `.env` ou la valeur réelle de `JWT_SECRET`. Utilisez les variables d'environnement de Render pour la production.

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teny_gasy"
+    namespace = "com.example.linguistique_regionnale"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.teny_gasy"
+        applicationId = "com.example.linguistique_regionnale"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
