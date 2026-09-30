@@ -134,6 +134,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     onChanged: (v) => setState(() => _remember = v ?? false)),
                 Text('Se souvenir de moi', style: ts(12, w5)),
                 const Spacer(),
+              ]),
+              const SizedBox(height: 8),
+              if (_error != null)
+                Text(_error!, style: ts(12, w6, color: C.error)),
+              PBtn(_busy ? 'Connexion...' : 'Se connecter',
+                  icon: Icons.arrow_forward, onTap: _submit),
+              const SizedBox(height: 12),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Icon(Icons.verified_user, size: 14, color: C.secondary),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text('Authentification sécurisée par le serveur',
+                      style: ts(11, w5, color: C.secondary)),
+                ),
+              ]),
+              const SizedBox(height: 12),
+              Center(
+                child: Text('Pas encore de compte ?',
+                    style: ts(13, w4, color: C.onVariant)),
+              ),
+              TextButton(
+                onPressed: () => replace(context, const SignupScreen()),
+                child: Text('Créer un compte gratuitement',
+                    style: ts(13, w7, color: C.primary)),
+              ),
+            ]),
+          ),
         ),
       ),
     );
