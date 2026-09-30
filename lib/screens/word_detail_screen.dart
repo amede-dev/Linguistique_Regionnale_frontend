@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
 import 'contribute_screen.dart';
@@ -77,7 +76,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
               child: Stack(children: [
                 Align(
                     alignment: Alignment.centerRight,
-                    child: Icon(regionIcon(w.region),
+                    child: Icon(appState.regionIcon(w.region),
                         size: 80, color: a(C.primaryContainer, .35))),
                 Align(
                     alignment: Alignment.topLeft,

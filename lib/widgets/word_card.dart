@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../data/models.dart';
 import '../screens/word_detail_screen.dart';
 import 'common.dart';
@@ -30,7 +29,7 @@ class WordCard extends StatelessWidget {
                   Pill('${word.region}',
                       bg: C.secondaryContainer,
                       fg: C.onSecondaryContainer,
-                      icon: regionIcon(word.region)),
+                      icon: appState.regionIcon(word.region)),
                   Pill(word.dialect, bg: C.tertiaryFixed, fg: C.tertiary),
                 ]),
               ),

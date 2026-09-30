@@ -47,7 +47,7 @@ class OnboardingScreen extends StatelessWidget {
               ]),
               const Spacer(),
               TextButton(
-                  onPressed: () => goHome(context),
+                  onPressed: () => push(context, const LoginScreen()),
                   child: Text('Passer', style: ts(14, w6, color: C.onVariant))),
             ]),
             Expanded(

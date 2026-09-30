@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../widgets/common.dart';
 import 'contribute_screen.dart';
 import 'word_detail_screen.dart';
@@ -25,8 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pearl = wordById('tsara_bia');
-    final trending = words
+    final pearl = appState.words.isEmpty ? null : appState.words.first;
+    if (pearl == null) return const Center(child: Text('Aucun contenu disponible pour le moment.'));
+    final trending = appState.words
         .where((w) => w.trending && (_cat == 'Tous' || w.category == _cat))
         .toList();
     return Column(children: [
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 12),
                       AudioBar(id: pearl.id, seconds: pearl.seconds),
                       const SizedBox(height: 12),
-                      UsageExample(pearl.example!, pearl.exampleFr),
+                      if (pearl.example != null) UsageExample(pearl.example!, pearl.exampleFr),
                       const SizedBox(height: 12),
                       Row(children: [
                         const Icon(Icons.verified,
@@ -176,10 +176,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 148,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: regions.length,
+                  itemCount: appState.regions.length,
                   separatorBuilder: (_, __) => const SizedBox(width: 12),
                   itemBuilder: (_, i) {
-                    final r = regions[i];
+                    final r = appState.regions[i];
                     return GestureDetector(
                       onTap: () => appState.openSearch(region: r.name),
                       child: Container(

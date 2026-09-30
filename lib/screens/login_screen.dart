@@ -6,6 +6,7 @@ import '../widgets/common.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 import '../core/i18n.dart';
+import 'package:dio/dio.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,11 +27,15 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _submit() {
-    if (_key.currentState!.validate()) {
-      appState.userEmail = _email.text.trim();
-      goHome(context);
-    }
+  bool _busy = false;
+  String? _error;
+  Future<void> _submit() async {
+    if (!_key.currentState!.validate() || _busy) return;
+    setState(() { _busy = true; _error = null; });
+    try { await appState.login(_email.text, _pwd.text); if (mounted) goHome(context); }
+    on DioException catch (e) { if (mounted) setState(() => _error = e.response?.statusCode == 401 ? 'E-mail ou mot de passe incorrect.' : 'Serveur indisponible.'); }
+    catch (_) { if (mounted) setState(() => _error = 'Connexion impossible.'); }
+    finally { if (mounted) setState(() => _busy = false); }
   }
 
   @override
@@ -98,12 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
               SocialBtn(
                   'Continuer avec Google',
                   Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => goHome(context)),
+                  () => toast(context, 'Connexion sociale non configurée.')),
               const SizedBox(height: 10),
               SocialBtn(
                   'Continuer avec Apple',
                   const Icon(Icons.apple, color: C.onSurface),
-                  () => goHome(context)),
+                  () => toast(context, 'Connexion sociale non configurée.')),
               const OrDivider('ou avec votre adresse e-mail'),
               const FieldLabel('Adresse e-mail'),
               TextFormField(
@@ -146,7 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ts(12, w6, color: C.primary))),
               ]),
               const SizedBox(height: 8),
-              PBtn('Se connecter', icon: Icons.arrow_forward, onTap: _submit),
+              if (_error != null) Text(_error!, style: ts(12, w6, color: C.error)),
+              PBtn(_busy ? 'Connexion...' : 'Se connecter', icon: Icons.arrow_forward, onTap: _submit),
               const SizedBox(height: 12),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 const Icon(Icons.verified_user, size: 14, color: C.secondary),

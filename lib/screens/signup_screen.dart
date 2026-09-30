@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
+import 'package:dio/dio.dart';
 import '../widgets/common.dart';
 import 'login_screen.dart';
 import '../core/i18n.dart';
@@ -40,12 +40,15 @@ class _SignupScreenState extends State<SignupScreen> {
     return (label: 'Faible', color: C.error);
   }
 
-  void _submit() {
-    if (!_key.currentState!.validate()) return;
-    appState.userName = _name.text.trim();
-    appState.userEmail = _email.text.trim();
-    appState.userRegion = _dialect ?? ''; // région choisie à l'inscription
-    goHome(context);
+  bool _busy = false;
+  String? _error;
+  Future<void> _submit() async {
+    if (!_key.currentState!.validate() || _busy) return;
+    setState(() { _busy = true; _error = null; });
+    try { await appState.register(_name.text, _email.text, _pwd.text, region: _dialect); if (mounted) goHome(context); }
+    on DioException catch (e) { if (mounted) setState(() => _error = e.response?.statusCode == 409 ? 'Cet e-mail est déjà utilisé.' : 'Inscription impossible.'); }
+    catch (_) { if (mounted) setState(() => _error = 'Inscription impossible.'); }
+    finally { if (mounted) setState(() => _busy = false); }
   }
 
   @override
@@ -89,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                  'Participez à la sauvegarde et la transmission vivante des $ethnieCount dialectes de Madagascar.',
+                  'Participez à la sauvegarde et la transmission vivante des ${appState.regions.length} régions linguistiques de Madagascar.',
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 16),
               AuthTabs(
@@ -100,12 +103,12 @@ class _SignupScreenState extends State<SignupScreen> {
               SocialBtn(
                   "S'inscrire avec Google",
                   Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => goHome(context)),
+                  () => toast(context, 'Inscription sociale non configurée.')),
               const SizedBox(height: 10),
               SocialBtn(
                   "S'inscrire avec Apple",
                   const Icon(Icons.apple, color: C.onSurface),
-                  () => goHome(context)),
+                  () => toast(context, 'Inscription sociale non configurée.')),
               const OrDivider('ou avec vos coordonnées'),
               const FieldLabel('Nom complet ou pseudonyme', trailing: 'Public'),
               TextFormField(
@@ -134,7 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     'Sélectionnez un dialecte de prédilection...',
                     icon: Icons.explore_outlined),
                 items: [
-                  for (final d in dialectChoices)
+                  for (final d in appState.regions.expand((r) => r.dialects.split(RegExp(r'[,/&•]'))).map((e) => e.trim()).where((e) => e.isNotEmpty).toSet())
                     DropdownMenuItem(
                         value: d,
                         child: Text(d,

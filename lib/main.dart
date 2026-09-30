@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/theme.dart';
+import 'core/app_state.dart';
 import 'screens/onboarding_screen.dart';
 
 void main() {
@@ -11,6 +12,7 @@ void main() {
     systemNavigationBarColor: C.surface,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
+  appState.loadCatalog();
   runApp(const LinguistiqueRegionnaleApp());
 }
 

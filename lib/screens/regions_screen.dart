@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
 import 'contribute_screen.dart';
@@ -15,7 +14,7 @@ class RegionsScreen extends StatefulWidget {
 }
 
 class _RegionsScreenState extends State<RegionsScreen> {
-  String _zone = allRegionsLabel;
+  String _zone = appState.allRegionsLabel;
   String _mapSel = 'Antananarivo';
 
   Widget _stat(String n, String l) => Expanded(
@@ -96,10 +95,11 @@ class _RegionsScreenState extends State<RegionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final list = regions
-        .where((r) => _zone == allRegionsLabel || r.zone == _zone)
+    final list = appState.regions
+        .where((r) => _zone == appState.allRegionsLabel || r.zone == _zone)
         .toList();
-    final sel = regions.firstWhere((r) => r.name == _mapSel);
+    final sel = appState.regions.where((r) => r.name == _mapSel).isNotEmpty ? appState.regions.firstWhere((r) => r.name == _mapSel) : (appState.regions.isNotEmpty ? appState.regions.first : null);
+    if (sel == null) return const Center(child: Text('Aucune région disponible.'));
     return Column(children: [
       const TabHeader(title: 'Régions'),
       Expanded(
@@ -136,7 +136,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
                       const SizedBox(height: 10),
                       Wrap(spacing: 8, runSpacing: 8, children: [
                         for (final r in [
-                          ...regions
+                          ...appState.regions
                         ]..sort((a, b) => a.order.compareTo(b.order)))
                           GestureDetector(
                             onTap: () => setState(() => _mapSel = r.name),
@@ -178,7 +178,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
                           child: Row(children: [
                             GestureDetector(
                               onTap: () =>
-                                  appState.togglePlay('preview_${sel.code}', 3),
+                                  appState.togglePlay('preview_${sel?.code ?? 'region'}', 3),
                               child: Container(
                                 width: 44,
                                 height: 44,
@@ -217,7 +217,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
               ),
               const SizedBox(height: 14),
               ChipsRow(
-                  items: zones,
+                  items: [appState.allRegionsLabel, ...appState.regions.map((r) => r.zone).where((z) => z.isNotEmpty).toSet()],
                   selected: _zone,
                   onSelect: (z) => setState(() => _zone = z)),
               const SizedBox(height: 12),

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
+import '../data/api/api_client.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
 import '../core/i18n.dart';
+import 'package:dio/dio.dart';
 
 enum _Rec { idle, recording, recorded }
 
@@ -14,32 +16,6 @@ class ContributeScreen extends StatefulWidget {
 }
 
 class _ContributeScreenState extends State<ContributeScreen> {
-  static const _dialects = [
-    'Antsiranana • Antakarana (Nord)',
-    'Majunga / Menabe • Sakalava (Ouest)',
-    'Toamasina • Betsimisaraka (Est)',
-    'Mandritsara • Tsimihety (Centre-Nord)',
-    'Analamanga • Merina (Hauts-Plateaux)',
-    'Fianarantsoa • Betsileo (Sud-Hauts-Plateaux)',
-    'Ambovombe • Tandroy (Grand Sud)',
-    'Toliara • Vezo (Littoral Sud-Ouest)',
-    'Ihosy • Bara (Plateaux du Sud)',
-    'Tolagnaro • Tañosy (Sud-Est)',
-  ];
-  static const _places = [
-    'Diego-Suarez (Antsiranana)',
-    'Nosy Be Hell-Ville',
-    'Majunga (Mahajanga)',
-    'SAVA (Sambava / Antalaha)',
-    'Tamatave (Toamasina)',
-    'Île Sainte-Marie (Nosy Boraha)',
-    'Antananarivo Renivohitra',
-    'Ambositra (Zafimaniry)',
-    'Fianarantsoa',
-    'Manakara / Farafangana',
-    'Tuléar (Toliara)',
-    'Fort-Dauphin (Tolagnaro)',
-  ];
   static const _cats = [
     '👋 Salutation',
     '📜 Proverbe (Ohabolana)',
@@ -112,47 +88,19 @@ class _ContributeScreenState extends State<ContributeScreen> {
     });
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final missing = <String>[
-      if (_term.text.trim().isEmpty) 'le mot',
-      if (_dialect == null) 'le dialecte',
-      if (_meaning.text.trim().isEmpty) 'la signification',
-      if (_rec != _Rec.recorded) "l'enregistrement",
+      if (_term.text.trim().isEmpty) 'le mot', if (_dialect == null) 'le dialecte',
+      if (_meaning.text.trim().isEmpty) 'la signification', if (_rec != _Rec.recorded) "l'enregistrement",
     ];
-    if (missing.isNotEmpty) {
-      toast(context, 'Champs manquants : ${missing.join(', ')}');
-      return;
-    }
-    appState.addVoice(); // +1 voix en temps réel
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: C.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        icon: const Icon(Icons.verified, color: C.secondary, size: 40),
-        title: Text('Démo de contribution terminée',
-            textAlign: TextAlign.center, style: ts(18, w7)),
-        content: Text(
-            '« ${_term.text.trim()} » a été validé localement pour cette démonstration. L\'envoi aux linguistes sera activé avec le backend.',
-            textAlign: TextAlign.center,
-            style: ts(13, w4, color: C.onVariant)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              Navigator.of(context).pop();
-            },
-            child: Text('Terminer', style: ts(13, w7, color: C.primary)),
-          ),
-        ],
-      ),
-    );
+    if (missing.isNotEmpty) { toast(context, 'Champs manquants : ${missing.join(', ')}'); return; }
+    try {
+      await apiClient.createContribution({'term': _term.text.trim(), 'phonetic': _phon.text.trim(),
+        'meaning': _meaning.text.trim(), 'example': _example.text.trim(), 'exampleFr': _exampleFr.text.trim(),
+        'region': _place ?? _dialect, 'dialect': _dialect, 'category': _cat, 'audioPath': null});
+      if (mounted) { toast(context, 'Proposition envoyée aux linguistes.'); Navigator.of(context).pop(); }
+    } on DioException { if (mounted) toast(context, 'Envoi impossible. Vérifiez votre connexion.'); }
   }
-
-  Widget _step(String t, String s) => Row(children: [
-        Expanded(child: Text(t, style: ts(17, w7))),
-        Pill(s, bg: C.primaryFixed, fg: C.primary),
-      ]);
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +175,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
               isExpanded: true,
               decoration: fieldDec('Sélectionnez une région linguistique'),
               items: [
-                for (final d in _dialects)
+                for (final d in appState.regions.map((r) => r.name))
                   DropdownMenuItem(
                       value: d,
                       child: Text(d,
@@ -383,7 +331,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
               ]),
             ),
             const SizedBox(height: 16),
-            PBtn('Test local de la proposition', icon: Icons.send, onTap: _submit),
+            PBtn('Envoyer la proposition', icon: Icons.send, onTap: _submit),
             const SizedBox(height: 8),
             Center(
               child: Text(

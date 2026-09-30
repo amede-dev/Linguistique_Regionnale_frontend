@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../widgets/common.dart';
 import '../widgets/word_card.dart';
 import 'contribute_screen.dart';
@@ -36,7 +35,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       listenable: appState,
       builder: (context, _) {
         final q = _ctrl.text.trim().toLowerCase();
-        var favs = words.where((w) => appState.isFav(w.id)).where((w) {
+        var favs = appState.words.where((w) => appState.isFav(w.id)).where((w) {
           if (q.isNotEmpty &&
               !(w.term.toLowerCase().contains(q) ||
                   w.meaning.toLowerCase().contains(q))) return false;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
-import '../data/mock_data.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
 import '../widgets/word_card.dart';
@@ -33,8 +32,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   List<Word> _results() {
     final q = _ctrl.text.trim().toLowerCase();
-    final list = words.where((w) {
-      final okRegion = appState.searchRegion == allRegionsLabel ||
+    final list = appState.words.where((w) {
+      final okRegion = appState.searchRegion == appState.allRegionsLabel ||
           w.region == appState.searchRegion;
       final okType =
           appState.searchType == 'Tous types' || w.type == appState.searchType;
@@ -48,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
     switch (appState.sort) {
       case 'Région (Nord à Sud)':
         list.sort(
-            (a, b) => regionOrder(a.region).compareTo(regionOrder(b.region)));
+            (a, b) => appState.regionOrder(a.region).compareTo(appState.regionOrder(b.region)));
         break;
       case 'Popularité':
         list.sort((a, b) => b.popularity.compareTo(a.popularity));
@@ -123,7 +122,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     TextButton(
                       onPressed: () {
                         _ctrl.clear();
-                        appState.setSearchRegion(allRegionsLabel);
+                        appState.setSearchRegion(appState.allRegionsLabel);
                         appState.setSearchType('Tous types');
                       },
                       child: Text('Réinitialiser',
@@ -131,7 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ]),
                   ChipsRow(
-                    items: [allRegionsLabel, ...regions.map((r) => r.name)],
+                    items: [appState.allRegionsLabel, ...appState.regions.map((r) => r.name)],
                     selected: appState.searchRegion,
                     onSelect: appState.setSearchRegion,
                   ),
