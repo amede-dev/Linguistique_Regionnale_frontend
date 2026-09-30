@@ -99,7 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   onLogin: () {},
                   onSignup: () => replace(context, const SignupScreen())),
               const SizedBox(height: 16),
-              const OrDivider('avec votre adresse e-mail'),
+              SocialBtn(
+                  'Continuer avec Google',
+                  Text('G', style: ts(18, w7, color: C.primaryContainer)),
+                  () => toast(context, 'Connexion Google non configurée.')),
+              const OrDivider('ou avec votre adresse e-mail'),
               const FieldLabel('Adresse e-mail'),
               TextFormField(
                 controller: _email,

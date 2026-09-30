@@ -100,7 +100,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   onLogin: () => replace(context, const LoginScreen()),
                   onSignup: () {}),
               const SizedBox(height: 16),
-              const OrDivider('avec votre adresse e-mail'),
+              SocialBtn(
+                  "S'inscrire avec Google",
+                  Text('G', style: ts(18, w7, color: C.primaryContainer)),
+                  () => toast(context, 'Inscription Google non configurée.')),
+              const OrDivider('ou avec votre adresse e-mail'),
               const FieldLabel('Nom complet ou pseudonyme', trailing: 'Public'),
               TextFormField(
                 controller: _name,
