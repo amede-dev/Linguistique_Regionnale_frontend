@@ -333,7 +333,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
                         Text('Validation communautaire garantie',
                             style: ts(13, w7, color: C.onSecondaryContainer)),
                         Text(
-                            'Votre proposition sera enregistrée et examinée par les linguistes.',
+                            'Le texte sera enregistré. L’envoi audio sera disponible après configuration du stockage.',
                             style: ts(12, w4, color: C.onSecondaryContainer)),
                       ]),
                 ),

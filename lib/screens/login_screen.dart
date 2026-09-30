@@ -3,7 +3,6 @@ import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
-import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 import '../core/i18n.dart';
 import 'package:dio/dio.dart';
@@ -100,16 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onLogin: () {},
                   onSignup: () => replace(context, const SignupScreen())),
               const SizedBox(height: 16),
-              SocialBtn(
-                  'Continuer avec Google',
-                  Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => toast(context, 'Connexion sociale non configurée.')),
-              const SizedBox(height: 10),
-              SocialBtn(
-                  'Continuer avec Apple',
-                  const Icon(Icons.apple, color: C.onSurface),
-                  () => toast(context, 'Connexion sociale non configurée.')),
-              const OrDivider('ou avec votre adresse e-mail'),
+              const OrDivider('avec votre adresse e-mail'),
               const FieldLabel('Adresse e-mail'),
               TextFormField(
                 controller: _email,
@@ -144,34 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     onChanged: (v) => setState(() => _remember = v ?? false)),
                 Text('Se souvenir de moi', style: ts(12, w5)),
                 const Spacer(),
-                TextButton(
-                    onPressed: () =>
-                        push(context, const ForgotPasswordScreen()),
-                    child: Text('Mot de passe oublié ?',
-                        style: ts(12, w6, color: C.primary))),
-              ]),
-              const SizedBox(height: 8),
-              if (_error != null) Text(_error!, style: ts(12, w6, color: C.error)),
-              PBtn(_busy ? 'Connexion...' : 'Se connecter', icon: Icons.arrow_forward, onTap: _submit),
-              const SizedBox(height: 12),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Icon(Icons.verified_user, size: 14, color: C.secondary),
-                const SizedBox(width: 6),
-                Flexible(
-                    child: Text(
-                        'Sécurisé par Supabase Auth • Chiffrement de bout en bout',
-                        style: ts(11, w5, color: C.secondary))),
-              ]),
-              const SizedBox(height: 12),
-              Center(
-                  child: Text('Pas encore de compte ?',
-                      style: ts(13, w4, color: C.onVariant))),
-              TextButton(
-                  onPressed: () => replace(context, const SignupScreen()),
-                  child: Text('Créer un compte gratuitement',
-                      style: ts(13, w7, color: C.primary))),
-            ]),
-          ),
         ),
       ),
     );

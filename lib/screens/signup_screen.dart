@@ -100,16 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   onLogin: () => replace(context, const LoginScreen()),
                   onSignup: () {}),
               const SizedBox(height: 16),
-              SocialBtn(
-                  "S'inscrire avec Google",
-                  Text('G', style: ts(18, w7, color: C.primaryContainer)),
-                  () => toast(context, 'Inscription sociale non configurée.')),
-              const SizedBox(height: 10),
-              SocialBtn(
-                  "S'inscrire avec Apple",
-                  const Icon(Icons.apple, color: C.onSurface),
-                  () => toast(context, 'Inscription sociale non configurée.')),
-              const OrDivider('ou avec vos coordonnées'),
+              const OrDivider('avec votre adresse e-mail'),
               const FieldLabel('Nom complet ou pseudonyme', trailing: 'Public'),
               TextFormField(
                 controller: _name,
