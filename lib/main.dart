@@ -12,7 +12,6 @@ void main() {
     systemNavigationBarColor: C.surface,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  appState.loadCatalog();
   runApp(const LinguistiqueRegionnaleApp());
 }
 

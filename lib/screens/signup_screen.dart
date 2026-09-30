@@ -92,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                  'Participez à la sauvegarde et la transmission vivante des ${appState.regions.length} régions linguistiques de Madagascar.',
+                  'Participez à la sauvegarde et à la transmission vivante du patrimoine linguistique de Madagascar.',
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 16),
               AuthTabs(
@@ -124,21 +124,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     : 'Adresse e-mail invalide',
               ),
               const FieldLabel("Région ou dialecte d'attache",
-                  trailing: 'Personnalise votre flux'),
-              DropdownButtonFormField<String>(
-                value: _dialect,
-                isExpanded: true,
-                decoration: fieldDec(
-                    'Sélectionnez un dialecte de prédilection...',
+                  trailing: 'Optionnel'),
+              TextFormField(
+                onChanged: (v) => _dialect = v.trim().isEmpty ? null : v.trim(),
+                decoration: fieldDec('Ex. Analamanga, Merina, Betsimisaraka...',
                     icon: Icons.explore_outlined),
-                items: [
-                  for (final d in appState.regions.expand((r) => r.dialects.split(RegExp(r'[,/&•]'))).map((e) => e.trim()).where((e) => e.isNotEmpty).toSet())
-                    DropdownMenuItem(
-                        value: d,
-                        child: Text(d,
-                            overflow: TextOverflow.ellipsis, style: ts(13, w5)))
-                ],
-                onChanged: (v) => setState(() => _dialect = v),
               ),
               const FieldLabel('Mot de passe'),
               TextFormField(
