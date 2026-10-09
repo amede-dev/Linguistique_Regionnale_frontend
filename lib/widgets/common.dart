@@ -23,8 +23,7 @@ class LogoMark extends StatelessWidget {
         height: size,
         decoration: const BoxDecoration(
             shape: BoxShape.circle, color: C.primaryContainer),
-        child: Icon(Icons.record_voice_over,
-            color: Colors.white, size: size * .55),
+        child: Icon(Icons.language, color: Colors.white, size: size * .55),
       );
 }
 
@@ -120,6 +119,45 @@ class PBtn extends StatelessWidget {
               child: child),
     );
   }
+}
+
+class CtaCard extends StatelessWidget {
+  final IconData icon;
+  final String title, subtitle, button;
+  final VoidCallback onTap;
+  const CtaCard(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.subtitle,
+      required this.button,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            color: C.primaryContainer, borderRadius: BorderRadius.circular(18)),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(icon, color: Colors.white, size: 24),
+          const SizedBox(height: 10),
+          Text(title, style: ts(17, w7, color: Colors.white)),
+          const SizedBox(height: 4),
+          Text(subtitle,
+              style: ts(12, w4, color: Colors.white.withOpacity(.9))),
+          const SizedBox(height: 14),
+          OutlinedButton.icon(
+            onPressed: onTap,
+            icon: const Icon(Icons.arrow_forward, size: 16),
+            label: Text(button),
+            style: OutlinedButton.styleFrom(
+                foregroundColor: C.primaryContainer,
+                backgroundColor: Colors.white,
+                side: BorderSide.none,
+                shape: const StadiumBorder()),
+          ),
+        ]),
+      );
 }
 
 class ChipsRow extends StatelessWidget {
@@ -273,126 +311,6 @@ class UserAvatar extends StatelessWidget {
                 : null,
           );
         },
-      );
-}
-
-/// Lecteur audio simulé avec forme d'onde, durée et vitesse.
-class AudioBar extends StatelessWidget {
-  final String id;
-  final int seconds;
-  const AudioBar({super.key, required this.id, required this.seconds});
-  @override
-  Widget build(BuildContext context) => ListenableBuilder(
-        listenable: appState,
-        builder: (context, _) {
-          final playing = appState.playingId == id;
-          final p = playing ? appState.progress : 0.0;
-          final shown = playing ? (seconds * p).floor() : seconds;
-          const n = 28;
-          return Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                color: C.low, borderRadius: BorderRadius.circular(14)),
-            child: Row(children: [
-              GestureDetector(
-                onTap: () => appState.togglePlay(id, seconds),
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: const BoxDecoration(
-                      color: C.primary, shape: BoxShape.circle),
-                  child: Icon(playing ? Icons.pause : Icons.play_arrow,
-                      color: Colors.white),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: SizedBox(
-                  height: 32,
-                  child: Row(
-                    children: List.generate(n, (i) {
-                      final h = 6.0 + ((i * 7) % 5) * 5.0;
-                      final active = i / n < p;
-                      return Expanded(
-                        child: Center(
-                          child: Container(
-                            width: 3,
-                            height: h,
-                            decoration: BoxDecoration(
-                                color: active ? C.primary : a(C.primary, .3),
-                                borderRadius: BorderRadius.circular(2)),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text('0:${shown.toString().padLeft(2, '0')}',
-                  style: ts(12, w6, color: C.onVariant)),
-              const SizedBox(width: 8),
-              GestureDetector(
-                onTap: appState.cycleSpeed,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                      color: C.container,
-                      borderRadius: BorderRadius.circular(99)),
-                  child: Text('${appState.speed}x',
-                      style: ts(11, w7, color: C.primary)),
-                ),
-              ),
-            ]),
-          );
-        },
-      );
-}
-
-/// Carte d'appel à contribuer (Accueil, Recherche, Régions, Favoris).
-class CtaCard extends StatelessWidget {
-  final IconData icon;
-  final String title, subtitle, button;
-  final VoidCallback onTap;
-  const CtaCard(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.subtitle,
-      required this.button,
-      required this.onTap});
-  @override
-  Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(
-              colors: [C.primaryContainer, C.primary],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight),
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(icon, color: C.onPrimaryContainer, size: 28),
-          const SizedBox(height: 10),
-          Text(title, style: ts(18, w7, color: Colors.white)),
-          const SizedBox(height: 4),
-          Text(subtitle, style: ts(13, w4, color: C.onPrimaryContainer)),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 46,
-            child: FilledButton.icon(
-              onPressed: onTap,
-              style: FilledButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: C.primary,
-                  shape: const StadiumBorder()),
-              icon: const Icon(Icons.add_circle_outline, size: 18),
-              label: Text(button, style: ts(13, w7, color: C.primary)),
-            ),
-          ),
-        ]),
       );
 }
 

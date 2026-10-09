@@ -46,8 +46,9 @@ class _SearchScreenState extends State<SearchScreen> {
     }).toList();
     switch (appState.sort) {
       case 'Région (Nord à Sud)':
-        list.sort(
-            (a, b) => appState.regionOrder(a.region).compareTo(appState.regionOrder(b.region)));
+        list.sort((a, b) => appState
+            .regionOrder(a.region)
+            .compareTo(appState.regionOrder(b.region)));
         break;
       case 'Popularité':
         list.sort((a, b) => b.popularity.compareTo(a.popularity));
@@ -85,8 +86,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     controller: _ctrl,
                     onChanged: (_) => setState(() {}),
                     decoration: fieldDec(
-                        'Rechercher un mot, une expression ou une signification...',
-                        icon: Icons.search).copyWith(border: pillBorder, enabledBorder: pillBorder),
+                            'Rechercher un mot, une expression ou une signification...',
+                            icon: Icons.search)
+                        .copyWith(
+                            border: pillBorder, enabledBorder: pillBorder),
                   ),
                   const SizedBox(height: 10),
                   Container(
@@ -130,7 +133,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ]),
                   ChipsRow(
-                    items: [appState.allRegionsLabel, ...appState.regions.map((r) => r.name)],
+                    items: [
+                      appState.allRegionsLabel,
+                      ...appState.regions.map((r) => r.name)
+                    ],
                     selected: appState.searchRegion,
                     onSelect: appState.setSearchRegion,
                   ),
@@ -184,7 +190,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   CardBox(
                     color: C.container,
                     child: Row(children: [
-                      const Icon(Icons.mic_none, color: C.primary, size: 28),
+                      const Icon(Icons.menu_book, color: C.primary, size: 28),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../data/api/api_client.dart';
 import '../data/models.dart';
@@ -17,8 +16,6 @@ class AppState extends ChangeNotifier {
   String language = 'Français';
   List<Word> words = const [];
   List<Region> regions = const [];
-  int contributedVoices = 0;
-  int get voiceCount => words.length + contributedVoices;
   String get allRegionsLabel => 'Toutes les régions';
 
   Future<void> loadCatalog() async {
@@ -112,10 +109,6 @@ class AppState extends ChangeNotifier {
               order: 0))
       .order;
   IconData regionIcon(String name) => Icons.language;
-  void addVoice() {
-    contributedVoices++;
-    notifyListeners();
-  }
 
   void setTab(int i) {
     tab = i;
@@ -204,47 +197,6 @@ class AppState extends ChangeNotifier {
     await apiClient.deleteProfilePhoto();
     profilePhoto = null;
     notifyListeners();
-  }
-
-  String? playingId;
-  double progress = 0;
-  double speed = 1.0;
-  Timer? _timer;
-  void cycleSpeed() {
-    const all = [1.0, 1.5, 0.75];
-    speed = all[(all.indexOf(speed) + 1) % all.length];
-    notifyListeners();
-  }
-
-  void togglePlay(String id, int seconds) {
-    if (playingId == id) {
-      stop();
-      return;
-    }
-    _timer?.cancel();
-    playingId = id;
-    progress = 0;
-    notifyListeners();
-    _timer = Timer.periodic(const Duration(milliseconds: 100), (t) {
-      progress += 100 * speed / (seconds.clamp(1, 999) * 1000);
-      if (progress >= 1)
-        stop();
-      else
-        notifyListeners();
-    });
-  }
-
-  void stop() {
-    _timer?.cancel();
-    playingId = null;
-    progress = 0;
-    notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 }
 

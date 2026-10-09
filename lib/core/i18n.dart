@@ -145,13 +145,13 @@ final List<(RegExp, String Function(Match))> _rules = [
   ),
   (RegExp(r'^Nuance : (.*)$'), (m) => 'Fahasamihafana : ${m[1]}'),
   (RegExp(r'^Force : (.*)$'), (m) => 'Hery : ${tr(m[1]!)}'),
-  (RegExp(r'^Voix native • (.*)$'), (m) => 'Feo teraka • ${m[1]}'),
+  (RegExp(r'^Information régionale • (.*)$'), (m) => 'Feo teraka • ${m[1]}'),
   (RegExp(r'^Salutation (.*) : (.*)$'), (m) => 'Fiarahabana ${m[1]} : ${m[2]}'),
   (
     RegExp(r'^(.*) • Écoute comparative$'),
     (m) => '${tr(m[1]!)} • Fihainoana fampitahana'
   ),
-  (RegExp(r'^(\d+) voix$'), (m) => 'feo ${m[1]}'),
+  (RegExp(r'^(\d+) mots$'), (m) => 'feo ${m[1]}'),
   (
     RegExp(r'^(.*) • Interjection$', caseSensitive: false),
     (m) => '${tr(m[1]!)} • Teny fiantsoana'
@@ -271,11 +271,11 @@ const Map<String, String> _mg = {
   'Sélectionnez un dialecte de prédilection...':
       'Fidio ny fitenim-paritra tianao...',
   'Privilège de Bienvenue': "Tombony ho an'ny vaovao",
-  'Débloquez immédiatement le mode hors-ligne et 5 dialectes audio en cache.':
+  'Débloquez immédiatement le mode hors-ligne et 5 dialectes données en cache.':
       "Vohay avy hatrany ny fomba tsy misy internet sy fitenim-paritra 5 misy feo voatahiry.",
   'Aide phonétique • Confidentialité • Académie Malgache':
       "Fanampiana amin'ny feo • Tsiambaratelo • Akademia Malagasy",
-  'Connectez-vous pour retrouver vos favoris, synchroniser vos audios et participer à la communauté.':
+  'Connectez-vous pour retrouver vos favoris, synchroniser vos donnéess et participer à la communauté.':
       "Midira mba hahitana ny ankafizinao, hampifanaraka ny feo ary handray anjara amin'ny fiarahamonina.",
   'Astuce de connexion': "Toro-hevitra momba ny fidirana",
   "Si vous avez utilisé Google pour vous inscrire sur Linguistique Régionale, connectez-vous directement via le bouton Google sans mot de passe.":
@@ -298,13 +298,13 @@ const Map<String, String> _mg = {
   'BIENVENUE SUR LINGUISTIQUE_RÉGIONALE':
       "TONGASOA ETO AMIN'NY LINGUISTIQUE_RÉGIONALE",
   'Un pays, plusieurs façons de parler.': 'Firenena iray, fomba fiteny maro.',
-  "Écoutez des prononciations authentiques, découvrez les nuances régionales et participez à la sauvegarde de notre patrimoine oral.":
+  "Écoutez des expressions authentiques, découvrez les nuances régionales et participez à la sauvegarde de notre patrimoine oral.":
       "Henoy ny feo tena izy, jereo ny fahasamihafan'ny faritra ary miaraha miaro ny lovantsofinay.",
   "Chaque mot, intonation ou variante locale est vérifié par nos linguistes et modérateurs communautaires avant d'intégrer l'encyclopédie sonore.":
       "Ny teny, ny feo na ny fitenim-paritra rehetra dia hamarinin'ny mpahay teny sy ny mpandamina ao amin'ny fiarahamonina aloha vao tafiditra ao amin'ny rakibolana ara-peo.",
   'Validation communautaire garantie':
       "Fanamarinana avy amin'ny fiarahamonina voaro",
-  'Données linguistiques protégées • Vos contributions audio et dialectes restent saufs':
+  'Données linguistiques protégées • Vos contributions données et dialectes restent saufs':
       "Voaaro ny angona ara-piteny • Azo antoka ny fandraisanao anjara",
 
   // Accueil
@@ -316,7 +316,7 @@ const Map<String, String> _mg = {
   'MOT DU JOUR': 'TENY ANDROANY',
   'Mis à jour à 06:00': "Nohavaozina tamin'ny 06:00",
   'Participez au patrimoine': "Miaraha miaro ny lova",
-  "Connaissez-vous une variante ? Enregistrez la voix d'un aîné ou soumettez une expression typique de votre région pour enrichir l'encyclopédie sonore.":
+  "Connaissez-vous une variante ? Saisissez la mots d'un aîné ou soumettez une expression typique de votre région pour enrichir l'encyclopédie sonore.":
       "Mahalala fitenim-paritra hafa ve ianao? Alaharo ny feon'ny anti-panahy na ateraho ny fitenenana mahazatra any amin'ny faritrao hanan-karena ny rakibolana ara-peo.",
   'Participer': 'Handray anjara',
   'Explorer': 'Hizaha',
@@ -346,8 +346,7 @@ const Map<String, String> _mg = {
       'Andramo teny hafa na faritra hafa.',
   'résultats trouvés': 'valiny hita',
   'Recherche par sens active': "Mandeha ny fikarohana araka ny hevitra",
-  'Recherche vocale : bientôt disponible':
-      "Fikarohana amin'ny feo : tsy ho ela",
+  'Recherche avancée disponible': "Fikarohana amin'ny feo : tsy ho ela",
   'Hauts-Plateaux': 'Tendrombohitra Afovoany',
   'Côte Est': 'Morontsiraka Atsinanana',
   'Côte Ouest': 'Morontsiraka Andrefana',
@@ -367,7 +366,7 @@ const Map<String, String> _mg = {
   'Créer une liste': 'Hamorona lisitra',
   'Listes personnalisées : bientôt disponible': 'Lisitra manokana : tsy ho ela',
   'Enrichissez la carte sonore': "Ampitomboy ny sarintanin'ny feo",
-  'Prononcez une variante locale de vos favoris.':
+  'Décrivez une variante locale de vos favoris.':
       "Vakio amin'ny fitenim-paritra any aminao ny ankafizinao.",
   'Exporter (.pdf)': 'Alefa (.pdf)',
   'Export PDF : bientôt disponible': 'Fanondranana PDF : tsy ho ela',
@@ -391,7 +390,7 @@ const Map<String, String> _mg = {
   'Votre dialecte manque ?': 'Tsy hita ve ny fitenim-paritra?',
   'Ajouter un dialecte': 'Hanampy fitenim-paritra',
   '18 Régions': 'Faritra 18',
-  '18 voix': 'Feo 18',
+  '18 mots': 'Feo 18',
   'Expressions': 'Fitenenana',
   'Dialecte principal': 'Fitenim-paritra lehibe',
   'Salutations': 'Fiarahabana',
@@ -419,9 +418,9 @@ const Map<String, String> _mg = {
   'Contribuez en enregistrant un mot de votre région.':
       "Handray anjara amin'ny fandraketana teny avy any amin'ny faritrao.",
   'Proposer un mot de votre région': "Hanolotra teny avy any amin'ny faritrao",
-  'Votre voix préserve notre culture': 'Ny feonao dia miaro ny kolontsaintsika',
+  'Votre mots préserve notre culture': 'Ny feonao dia miaro ny kolontsaintsika',
   '1. Terme & Contexte': '1. Teny sy zava-misy',
-  '2. Studio Vocal': '2. Studio feo',
+  '2. Contexte du mot': '2. Studio feo',
   'Étape 1/2': 'Dingana 1/2',
   'Étape 2/2': 'Dingana 2/2',
   'Mot ou expression en dialecte': "Teny na fitenenana amin'ny fitenim-paritra",
@@ -443,14 +442,14 @@ const Map<String, String> _mg = {
   'Revue linguistique sous 48h. Vous gagnerez 25 points de réputation culturelle.':
       "Hojerena amin'ny mpahay teny anatin'ny 48 ora. Handray isa 25 amin'ny lazanao ara-kolontsaina ianao.",
   'Merci pour votre contribution !': 'Misaotra ny anjara birakao!',
-  'Micro prêt': 'Vonona ny mikrô',
-  'Appuyez pour enregistrer votre prononciation native':
+  'Prêt à contribuer': 'Vonona ny mikrô',
+  'Appuyez pour enregistrer votre expression native':
       'Tsindrio hitehirizana ny fanononanao',
   'Enregistrement…': 'Mandraikitra…',
   'Enregistrement prêt ✓': 'Vonona ny rakitra ✓',
   'Enregistrer': 'Tehirizo',
-  "Enregistrez d'abord votre prononciation": 'Alaharo aloha ny fanononanao',
-  'Prononcez clairement le mot 2 fois à voix haute dans un environnement calme.':
+  "Saisissez d'abord votre expression": 'Alaharo aloha ny fanononanao',
+  'Décrivez clairement le mot 2 fois à mots haute dans un formulaire complet.':
       "Vakio tsara indroa amin'ny feo avo ny teny ao amin'ny toerana mangina.",
   'Qualité : 48 kHz HD • Réduction de bruit active':
       'Kalitao : 48 kHz HD • Mandeha ny fampihenana tabataba',

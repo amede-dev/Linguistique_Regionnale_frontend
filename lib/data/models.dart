@@ -7,9 +7,17 @@ class Variant {
 }
 
 class Word {
-  final String id, term, phonetic, meaning, region, dialect, type, category, note;
+  final String id,
+      term,
+      phonetic,
+      meaning,
+      region,
+      dialect,
+      type,
+      category,
+      note;
   final String? example, exampleFr, etymology;
-  final int seconds, popularity;
+  final int popularity;
   final bool trending;
   final List<Variant> variants;
 
@@ -26,21 +34,27 @@ class Word {
     this.example,
     this.exampleFr,
     this.etymology,
-    this.seconds = 3,
     this.popularity = 50,
     this.trending = false,
     this.variants = const [],
   });
 
   factory Word.fromJson(Map<String, dynamic> j) => Word(
-    id: '${j['id'] ?? j['slug'] ?? ''}', term: '${j['term'] ?? ''}',
-    phonetic: '${j['phonetic'] ?? ''}', meaning: '${j['meaning'] ?? ''}',
-    region: '${j['region_name'] ?? j['region'] ?? ''}', dialect: '${j['dialect'] ?? ''}',
-    type: '${j['type'] ?? 'Expressions'}', category: '${j['category'] ?? 'Salutations'}',
-    note: '${j['note'] ?? ''}', example: j['example'] as String?, exampleFr: j['example_fr'] as String?,
-    etymology: j['etymology'] as String?, seconds: (j['seconds'] as num?)?.toInt() ?? 0,
-    popularity: (j['popularity'] as num?)?.toInt() ?? 0, trending: j['trending'] == true,
-  );
+        id: '${j['id'] ?? j['slug'] ?? ''}',
+        term: '${j['term'] ?? ''}',
+        phonetic: '${j['phonetic'] ?? ''}',
+        meaning: '${j['meaning'] ?? ''}',
+        region: '${j['region_name'] ?? j['region'] ?? ''}',
+        dialect: '${j['dialect'] ?? ''}',
+        type: '${j['type'] ?? 'Expressions'}',
+        category: '${j['category'] ?? 'Salutations'}',
+        note: '${j['note'] ?? ''}',
+        example: j['example'] as String?,
+        exampleFr: j['example_fr'] as String?,
+        etymology: j['etymology'] as String?,
+        popularity: (j['popularity'] as num?)?.toInt() ?? 0,
+        trending: j['trending'] == true,
+      );
 }
 
 class Region {
@@ -65,11 +79,18 @@ class Region {
   });
 
   factory Region.fromJson(Map<String, dynamic> j) => Region(
-    code: '${j['code'] ?? ''}', name: '${j['name'] ?? ''}', dialects: '${j['dialects'] ?? ''}',
-    zone: '${j['zone'] ?? ''}', badge: '${j['badge'] ?? ''}', subtitle: '${j['subtitle'] ?? ''}',
-    quote: '${j['quote'] ?? ''}', icon: Icons.language,
-    words: (j['words'] as num?)?.toInt() ?? 0, expressions: (j['expressions'] as num?)?.toInt() ?? 0,
-    contributors: (j['contributors'] as num?)?.toInt() ?? 0, dialectCount: (j['dialect_count'] as num?)?.toInt() ?? 0,
-    order: (j['sort_order'] as num?)?.toInt() ?? 0,
-  );
+        code: '${j['code'] ?? ''}',
+        name: '${j['name'] ?? ''}',
+        dialects: '${j['dialects'] ?? ''}',
+        zone: '${j['zone'] ?? ''}',
+        badge: '${j['badge'] ?? ''}',
+        subtitle: '${j['subtitle'] ?? ''}',
+        quote: '${j['quote'] ?? ''}',
+        icon: Icons.language,
+        words: (j['words'] as num?)?.toInt() ?? 0,
+        expressions: (j['expressions'] as num?)?.toInt() ?? 0,
+        contributors: (j['contributors'] as num?)?.toInt() ?? 0,
+        dialectCount: (j['dialect_count'] as num?)?.toInt() ?? 0,
+        order: (j['sort_order'] as num?)?.toInt() ?? 0,
+      );
 }

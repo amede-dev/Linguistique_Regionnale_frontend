@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text('Bienvenue !', style: ts(24, w7)),
               const SizedBox(height: 4),
               Text(
-                  'Connectez-vous pour retrouver vos favoris, synchroniser vos audios et participer à la communauté.',
+                  'Connectez-vous pour retrouver vos favoris, synchroniser vos données et participer à la communauté.',
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 16),
               AuthTabs(

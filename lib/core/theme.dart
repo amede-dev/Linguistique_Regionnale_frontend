@@ -33,7 +33,11 @@ Color a(Color c, double o) => c.withAlpha((o * 255).round());
 TextStyle ts(double size, FontWeight w,
         {Color color = C.onSurface, double height = 1.4, double ls = 0}) =>
     TextStyle(
-        fontSize: size, fontWeight: w, color: color, height: height, letterSpacing: ls);
+        fontSize: size,
+        fontWeight: w,
+        color: color,
+        height: height,
+        letterSpacing: ls);
 
 const w4 = FontWeight.w400;
 const w5 = FontWeight.w500;
@@ -57,15 +61,17 @@ ThemeData buildTheme() {
   );
   return base.copyWith(
     textTheme: base.textTheme,
-    appBarTheme: const AppBarTheme(backgroundColor: C.surface, elevation: 0, scrolledUnderElevation: 0),
+    appBarTheme: const AppBarTheme(
+        backgroundColor: C.surface, elevation: 0, scrolledUnderElevation: 0),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: C.surface,
       indicatorColor: C.primaryFixed,
       height: 68,
-      labelTextStyle: WidgetStateProperty.resolveWith((s) => ts(11, s.contains(WidgetState.selected) ? w7 : w5,
+      labelTextStyle: WidgetStateProperty.resolveWith((s) => ts(
+          11, s.contains(WidgetState.selected) ? w7 : w5,
           color: s.contains(WidgetState.selected) ? C.primary : C.onVariant)),
-      iconTheme: WidgetStateProperty.resolveWith(
-          (s) => IconThemeData(color: s.contains(WidgetState.selected) ? C.primary : C.onVariant)),
+      iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(
+          color: s.contains(WidgetState.selected) ? C.primary : C.onVariant)),
     ),
   );
 }

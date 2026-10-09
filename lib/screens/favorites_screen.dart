@@ -70,8 +70,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     controller: _ctrl,
                     onChanged: (_) => setState(() {}),
                     decoration: fieldDec(
-                        'Rechercher parmi vos ${appState.favorites.length} expressions...',
-                        icon: Icons.search).copyWith(border: pillBorder, enabledBorder: pillBorder),
+                            'Rechercher parmi vos ${appState.favorites.length} expressions...',
+                            icon: Icons.search)
+                        .copyWith(
+                            border: pillBorder, enabledBorder: pillBorder),
                   ),
                   const SizedBox(height: 10),
                   ChipsRow(
@@ -151,9 +153,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         padding: const EdgeInsets.only(bottom: 12),
                         child: WordCard(w, removable: true)),
                   CtaCard(
-                    icon: Icons.mic,
-                    title: 'Enrichissez la carte sonore',
-                    subtitle: 'Prononcez une variante locale de vos favoris.',
+                    icon: Icons.add_circle_outline,
+                    title: 'Enrichissez le dictionnaire',
+                    subtitle:
+                        'Proposez un mot ou une expression de votre région.',
                     button: 'Participer',
                     onTap: () => push(context, const ContributeScreen()),
                   ),

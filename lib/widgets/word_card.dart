@@ -51,8 +51,6 @@ class WordCard extends StatelessWidget {
               UsageExample(word.example!, word.exampleFr),
             ],
             const SizedBox(height: 12),
-            AudioBar(id: word.id, seconds: word.seconds),
-            const SizedBox(height: 10),
             Row(children: [
               const Icon(Icons.verified, size: 15, color: C.secondary),
               const SizedBox(width: 4),

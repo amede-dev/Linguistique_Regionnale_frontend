@@ -31,7 +31,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
             Row(children: [
               Expanded(
                   child: Text(v.forms, style: ts(17, w7, color: C.primary))),
-              const Icon(Icons.volume_up, color: C.primary),
+              const Icon(Icons.check_circle_outline, color: C.primary),
             ]),
             const SizedBox(height: 4),
             Text(v.text, style: ts(13, w4, color: C.onSurface)),
@@ -130,17 +130,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(children: [
-                      const Icon(Icons.record_voice_over,
-                          size: 16, color: C.secondary),
-                      const SizedBox(width: 6),
-                      Expanded(
-                          child: Text('Voix native • ${w.region}',
-                              style: ts(12, w7, color: C.secondary))),
-                    ]),
                     Text(w.note, style: ts(12, w4, color: C.onVariant)),
-                    const SizedBox(height: 10),
-                    AudioBar(id: w.id, seconds: w.seconds),
                     const SizedBox(height: 10),
                     Row(children: [
                       const Icon(Icons.location_on, size: 16, color: C.primary),

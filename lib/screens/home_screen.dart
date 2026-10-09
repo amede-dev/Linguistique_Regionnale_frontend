@@ -25,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final pearl = appState.words.isEmpty ? null : appState.words.first;
-    if (pearl == null) return const Center(child: Text('Aucun contenu disponible pour le moment.'));
+    if (pearl == null)
+      return const Center(
+          child: Text('Aucun contenu disponible pour le moment.'));
     final trending = appState.words
         .where((w) => w.trending && (_cat == 'Tous' || w.category == _cat))
         .toList();
@@ -127,9 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "Variante côtière orientale de l'expression commune « Tsara be », exprimant l'admiration joyeuse et cordiale."),
                       ])),
                       const SizedBox(height: 12),
-                      AudioBar(id: pearl.id, seconds: pearl.seconds),
                       const SizedBox(height: 12),
-                      if (pearl.example != null) UsageExample(pearl.example!, pearl.exampleFr),
+                      if (pearl.example != null)
+                        UsageExample(pearl.example!, pearl.exampleFr),
                       const SizedBox(height: 12),
                       Row(children: [
                         const Icon(Icons.verified,
@@ -254,27 +256,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(12),
                       onTap: () => push(context, WordDetailScreen(word: w)),
                       child: Row(children: [
-                        GestureDetector(
-                          onTap: () => appState.togglePlay(w.id, w.seconds),
-                          child: Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                                color: appState.playingId == w.id
-                                    ? C.primary
-                                    : C.primaryFixed,
-                                shape: BoxShape.circle),
-                            child: Icon(
-                                appState.playingId == w.id
-                                    ? Icons.pause
-                                    : Icons.volume_up,
-                                color: appState.playingId == w.id
-                                    ? Colors.white
-                                    : C.primary,
-                                size: 22),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,10 +294,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               const SizedBox(height: 14),
               CtaCard(
-                icon: Icons.record_voice_over,
+                icon: Icons.add_circle_outline,
                 title: 'Participez au patrimoine',
                 subtitle:
-                    "Connaissez-vous une variante ? Enregistrez la voix d'un aîné ou soumettez une expression typique de votre région pour enrichir l'encyclopédie sonore.",
+                    "Connaissez-vous un mot ou une expression de votre région ? Partagez-la avec la communauté.",
                 button: 'Proposer un mot de votre région',
                 onTap: () => push(context, const ContributeScreen()),
               ),

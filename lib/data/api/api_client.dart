@@ -6,7 +6,8 @@ class ApiClient {
       : _dio = Dio(BaseOptions(
           baseUrl: baseUrl ??
               const String.fromEnvironment('API_BASE_URL',
-                  defaultValue: 'https://linguistique-regionnale-backend.onrender.com/api'),
+                  defaultValue:
+                      'https://linguistique-regionnale-backend.onrender.com/api'),
           connectTimeout: const Duration(seconds: 8),
           receiveTimeout: const Duration(seconds: 12),
           headers: {'Content-Type': 'application/json'},
@@ -51,7 +52,8 @@ class ApiClient {
 
   Future<Map<String, dynamic>> uploadProfilePhoto(String path) async {
     final form = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
-    return (await _dio.put<Map<String, dynamic>>('/profile/photo', data: form)).data!;
+    return (await _dio.put<Map<String, dynamic>>('/profile/photo', data: form))
+        .data!;
   }
 
   Future<Map<String, dynamic>> deleteProfilePhoto() async =>

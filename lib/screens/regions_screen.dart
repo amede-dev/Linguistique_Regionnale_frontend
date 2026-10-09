@@ -77,7 +77,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
             ),
             const SizedBox(height: 10),
             Row(children: [
-              const Icon(Icons.record_voice_over, size: 16, color: C.tertiary),
+              const Icon(Icons.format_quote, size: 16, color: C.tertiary),
               const SizedBox(width: 6),
               Expanded(
                   child: Text(r.quote,
@@ -98,8 +98,11 @@ class _RegionsScreenState extends State<RegionsScreen> {
     final list = appState.regions
         .where((r) => _zone == appState.allRegionsLabel || r.zone == _zone)
         .toList();
-    final sel = appState.regions.where((r) => r.name == _mapSel).isNotEmpty ? appState.regions.firstWhere((r) => r.name == _mapSel) : (appState.regions.isNotEmpty ? appState.regions.first : null);
-    if (sel == null) return const Center(child: Text('Aucune région disponible.'));
+    final sel = appState.regions.where((r) => r.name == _mapSel).isNotEmpty
+        ? appState.regions.firstWhere((r) => r.name == _mapSel)
+        : (appState.regions.isNotEmpty ? appState.regions.first : null);
+    if (sel == null)
+      return const Center(child: Text('Aucune région disponible.'));
     return Column(children: [
       const TabHeader(title: 'Régions'),
       Expanded(
@@ -168,66 +171,27 @@ class _RegionsScreenState extends State<RegionsScreen> {
                           ),
                       ]),
                       const SizedBox(height: 12),
-                      ListenableBuilder(
-                        listenable: appState,
-                        builder: (context, _) => Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: C.low,
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Row(children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  appState.togglePlay('preview_${sel?.code ?? 'region'}', 3),
-                              child: Container(
-                                width: 44,
-                                height: 44,
-                                decoration: const BoxDecoration(
-                                    color: C.primary, shape: BoxShape.circle),
-                                child: Icon(
-                                    appState.playingId == 'preview_${sel.code}'
-                                        ? Icons.pause
-                                        : Icons.play_arrow,
-                                    color: Colors.white),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        'Salutation ${sel.name} : ${sel.quote}',
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: ts(12, w6)),
-                                    Text('${sel.zone} • Écoute comparative',
-                                        style: ts(11, w4, color: C.onVariant)),
-                                  ]),
-                            ),
-                            GestureDetector(
-                              onTap: appState.cycleSpeed,
-                              child: Text('${appState.speed}x',
-                                  style: ts(11, w7, color: C.primary)),
-                            ),
-                          ]),
-                        ),
-                      ),
+                      Text('« ${sel.quote} »',
+                          style: ts(13, w5, color: C.onVariant)
+                              .copyWith(fontStyle: FontStyle.italic)),
                     ]),
               ),
               const SizedBox(height: 14),
-              ChipsRow(
-                  items: [appState.allRegionsLabel, ...appState.regions.map((r) => r.zone).where((z) => z.isNotEmpty).toSet()],
-                  selected: _zone,
-                  onSelect: (z) => setState(() => _zone = z)),
+              ChipsRow(items: [
+                appState.allRegionsLabel,
+                ...appState.regions
+                    .map((r) => r.zone)
+                    .where((z) => z.isNotEmpty)
+                    .toSet()
+              ], selected: _zone, onSelect: (z) => setState(() => _zone = z)),
               const SizedBox(height: 12),
               for (final r in list) _card(r),
               const SizedBox(height: 4),
               CtaCard(
-                icon: Icons.mic,
+                icon: Icons.add_circle_outline,
                 title: "Votre parler manque à l'appel ?",
                 subtitle:
-                    'Aidez-nous à sauvegarder les variantes locales oubliées.',
+                    'Aidez-nous à documenter les mots et expressions locales.',
                 button: 'Ajouter un dialecte',
                 onTap: () => push(context, const ContributeScreen()),
               ),

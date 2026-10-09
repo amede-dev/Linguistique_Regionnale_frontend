@@ -71,51 +71,23 @@ class OnboardingScreen extends StatelessWidget {
                       Positioned(
                           top: 26,
                           left: 16,
-                          child: _chip('Tsimihety', Icons.graphic_eq)),
+                          child: _chip('Tsimihety', Icons.language)),
                       Positioned(
                           top: 70,
                           right: 14,
-                          child: _chip('Betsimisaraka', Icons.spatial_audio)),
+                          child: _chip('Betsimisaraka', Icons.location_on)),
                       Positioned(
                           bottom: 90,
                           left: 12,
-                          child: _chip('Antandroy', Icons.record_voice_over)),
+                          child: _chip('Antandroy', Icons.map)),
                       Positioned(
                           bottom: 44,
                           right: 22,
-                          child: _chip('Sakalava', Icons.spatial_audio)),
+                          child: _chip('Sakalava', Icons.location_on)),
                       Positioned(
                         bottom: 14,
                         left: 20,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                              color: C.primaryContainer,
-                              borderRadius: BorderRadius.circular(99)),
-                          child: Row(mainAxisSize: MainAxisSize.min, children: [
-                            const Icon(Icons.volume_up,
-                                size: 14, color: Colors.white),
-                            const SizedBox(width: 6),
-                            Image.asset('assets/images/logo_vocal.png',
-                                width: 22, height: 22),
-                            const SizedBox(width: 6),
-                            ListenableBuilder(
-                              listenable: appState,
-                              builder: (context, _) =>
-                                  TweenAnimationBuilder<int>(
-                                tween: IntTween(
-                                    begin: 0, end: appState.voiceCount),
-                                duration: const Duration(milliseconds: 900),
-                                curve: Curves.easeOut,
-                                builder: (context, value, _) => Text(
-                                  '$value voix',
-                                  style: ts(12, w7, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
+                        child: _chip('Patrimoine régional', Icons.menu_book),
                       ),
                     ]),
                   ),
@@ -145,7 +117,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              "Écoutez des prononciations authentiques, découvrez les nuances régionales et participez à la sauvegarde de notre patrimoine oral.",
+              "Découvrez les mots, expressions et nuances régionales de Madagascar.",
               textAlign: TextAlign.center,
               style: ts(13, w4, color: C.onVariant),
             ),

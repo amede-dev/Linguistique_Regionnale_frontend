@@ -13,11 +13,13 @@ void replace(BuildContext c, Widget w) =>
 void goHome(BuildContext c) {
   appState.loggedIn = true;
   appState.setTab(0);
-  Navigator.of(c).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const MainShell()), (r) => false);
+  Navigator.of(c).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const MainShell()), (r) => false);
 }
 
 void goOnboarding(BuildContext c) {
   appState.logout();
-  Navigator.of(c)
-      .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const OnboardingScreen()), (r) => false);
+  Navigator.of(c).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+      (r) => false);
 }

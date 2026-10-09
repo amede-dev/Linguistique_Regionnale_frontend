@@ -159,7 +159,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                     child: Text(
-                        'Données linguistiques protégées • Vos contributions audio et dialectes restent saufs',
+                        'Données linguistiques protégées • Vos contributions restent sauvegardées',
                         style: ts(11, w5, color: C.secondary))),
               ]),
             ]),
