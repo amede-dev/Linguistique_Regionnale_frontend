@@ -37,8 +37,11 @@ class ApiClient {
   Future<Map<String, dynamic>> googleLogin({String? region}) async {
     const id = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
     if (id.isEmpty) throw StateError('GOOGLE_SERVER_CLIENT_ID manquant');
-    final account = await GoogleSignIn(
-        serverClientId: id, scopes: const ['email', 'profile']).signIn();
+    final google = GoogleSignIn(
+        serverClientId: id, scopes: const ['email', 'profile']);
+    // Force l'affichage du sélecteur de comptes à chaque clic.
+    await google.signOut();
+    final account = await google.signIn();
     if (account == null) throw StateError('Connexion Google annulée');
     final token = (await account.authentication).idToken;
     if (token == null || token.isEmpty) throw StateError('Jeton Google absent');
@@ -58,6 +61,10 @@ class ApiClient {
 
   Future<Map<String, dynamic>> deleteProfilePhoto() async =>
       (await _dio.delete<Map<String, dynamic>>('/profile/photo')).data!;
+
+  Future<void> deleteAccount() async {
+    await _dio.delete<void>('/profile');
+  }
 
   Future<List<dynamic>> regions() async =>
       (await _dio.get<List<dynamic>>('/regions')).data!;

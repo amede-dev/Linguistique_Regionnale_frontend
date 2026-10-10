@@ -135,6 +135,39 @@ class ProfileScreen extends StatelessWidget {
     if (ok == true && context.mounted) goOnboarding(context);
   }
 
+  Future<void> _confirmDeleteAccount(BuildContext context) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: C.lowest,
+        title: Text('Supprimer le compte', style: ts(18, w7)),
+        content: Text(
+            'Votre compte, vos favoris, vos contributions et votre photo seront définitivement supprimés.',
+            style: ts(14, w4, color: C.onVariant)),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text('Annuler', style: ts(14, w6))),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(backgroundColor: C.error),
+            child: Text('Supprimer', style: ts(14, w7, color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !context.mounted) return;
+    try {
+      await appState.deleteAccount();
+      if (context.mounted) {
+        toast(context, 'Compte supprimé');
+        goOnboarding(context);
+      }
+    } catch (_) {
+      if (context.mounted) toast(context, 'Suppression impossible pour le moment');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -226,6 +259,15 @@ class ProfileScreen extends StatelessWidget {
                       icon: const Icon(Icons.logout, color: C.error, size: 18),
                       label: Text('Se déconnecter',
                           style: ts(14, w7, color: C.error)),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () => _confirmDeleteAccount(context),
+                      icon: const Icon(Icons.delete_forever, color: C.error),
+                      label: Text('Supprimer définitivement mon compte',
+                          style: ts(12, w6, color: C.error)),
                     ),
                   ),
                   const SizedBox(height: 16),

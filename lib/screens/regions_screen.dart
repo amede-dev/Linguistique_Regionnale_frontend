@@ -24,6 +24,14 @@ class _RegionsScreenState extends State<RegionsScreen> {
         ]),
       );
 
+  List<Word> _greetings(Region r) {
+    final mine = appState.words.where((w) => w.region == r.name);
+    return [
+      ...mine.where((w) => w.category == 'Salutations').take(1),
+      ...mine.where((w) => w.category == 'Au revoir').take(1),
+    ];
+  }
+
   Widget _card(Region r) => Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: CardBox(
@@ -72,10 +80,36 @@ class _RegionsScreenState extends State<RegionsScreen> {
               child: Row(children: [
                 _stat('${r.words}', 'mots'),
                 _stat('${r.expressions}', 'expressions'),
-                _stat('${r.contributors}', 'contributeurs')
+                _stat('${r.dialectCount}', 'dialectes')
               ]),
             ),
+            if (r.dialects.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text('Dialectes : ${r.dialects}',
+                    style: ts(12, w6, color: C.onVariant)),
+              ),
+            for (final w in _greetings(r))
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(children: [
+                  Pill(w.category, bg: C.tertiaryFixed, fg: C.tertiary),
+                  const SizedBox(width: 8),
+                  Expanded(
+                      child: Text(
+                          w.phonetic.isEmpty
+                              ? w.term
+                              : '${w.term}  [${w.phonetic}]',
+                          style: ts(13, w6))),
+                ]),
+              ),
             const SizedBox(height: 10),
+            if (r.words == 0)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text('Données en cours de documentation',
+                    style: ts(12, w6, color: C.tertiary)),
+              ),
             Row(children: [
               const Icon(Icons.format_quote, size: 16, color: C.tertiary),
               const SizedBox(width: 6),
@@ -85,10 +119,12 @@ class _RegionsScreenState extends State<RegionsScreen> {
                           .copyWith(fontStyle: FontStyle.italic))),
             ]),
             const SizedBox(height: 10),
-            PBtn('Explorer',
+            PBtn(r.words > 0 ? 'Explorer' : 'Bientôt disponible',
                 icon: Icons.arrow_forward,
                 outlined: true,
-                onTap: () => appState.openSearch(region: r.name)),
+                onTap: r.words > 0
+                    ? () => appState.openSearch(region: r.name)
+                    : null),
           ]),
         ),
       );

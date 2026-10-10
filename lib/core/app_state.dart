@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../data/api/api_client.dart';
 import '../data/models.dart';
 import 'i18n.dart' show languageNotifier;
@@ -198,6 +199,21 @@ class AppState extends ChangeNotifier {
     await apiClient.deleteProfilePhoto();
     profilePhoto = null;
     notifyListeners();
+  }
+
+  Future<void> deleteAccount() async {
+    await apiClient.deleteAccount();
+    try {
+      const id = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
+      if (id.isNotEmpty) {
+        await GoogleSignIn(
+                serverClientId: id, scopes: const ['email', 'profile'])
+            .signOut();
+      }
+    } catch (_) {
+      // La suppression côté serveur est déjà effectuée.
+    }
+    logout();
   }
 }
 

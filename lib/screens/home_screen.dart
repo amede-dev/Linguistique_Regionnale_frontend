@@ -24,10 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pearl = appState.words.isEmpty ? null : appState.words.first;
-    if (pearl == null)
-      return const Center(
-          child: Text('Aucun contenu disponible pour le moment.'));
     final trending = appState.words
         .where((w) => w.trending && (_cat == 'Tous' || w.category == _cat))
         .toList();
@@ -81,78 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: ts(13, w4, color: C.outline))),
                   ]),
                 ),
-              ),
-              const SizedBox(height: 18),
-              Row(children: [
-                const Icon(Icons.auto_awesome, size: 14, color: C.primary),
-                const SizedBox(width: 4),
-                Text('PERLE DU JOUR',
-                    style: ts(11, w7, color: C.primary, ls: 1)),
-                const Spacer(),
-                Text('Mis à jour à 06:00',
-                    style: ts(11, w5, color: C.onVariant)),
-              ]),
-              const SizedBox(height: 8),
-              CardBox(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(children: [
-                        const Pill('MOT DU JOUR',
-                            bg: C.primaryContainer, fg: Colors.white),
-                        const Spacer(),
-                        Flexible(
-                            child: Pill('${pearl.region} (${pearl.dialect})',
-                                bg: C.secondaryContainer,
-                                fg: C.onSecondaryContainer,
-                                icon: Icons.location_on)),
-                      ]),
-                      const SizedBox(height: 12),
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Expanded(
-                                child: Text(pearl.term.toUpperCase(),
-                                    style:
-                                        ts(24, w7, color: C.primary, ls: -.2))),
-                            Text(pearl.phonetic,
-                                style: ts(12, w5, color: C.outline)),
-                          ]),
-                      const SizedBox(height: 6),
-                      Text.rich(TextSpan(style: ts(14, w4), children: [
-                        TextSpan(
-                            text: 'Très bien, magnifique ! ',
-                            style: ts(14, w7, color: C.secondary)),
-                        const TextSpan(
-                            text:
-                                "Variante côtière orientale de l'expression commune « Tsara be », exprimant l'admiration joyeuse et cordiale."),
-                      ])),
-                      const SizedBox(height: 12),
-                      const SizedBox(height: 12),
-                      if (pearl.example != null)
-                        UsageExample(pearl.example!, pearl.exampleFr),
-                      const SizedBox(height: 12),
-                      Row(children: [
-                        const Icon(Icons.verified,
-                            size: 16, color: C.secondary),
-                        const SizedBox(width: 4),
-                        Expanded(
-                            child: Text('Validé par 42 locuteurs',
-                                style: ts(12, w6, color: C.secondary))),
-                        TextButton(
-                          onPressed: () =>
-                              push(context, WordDetailScreen(word: pearl)),
-                          child: Row(mainAxisSize: MainAxisSize.min, children: [
-                            Text('Découvrir',
-                                style: ts(13, w7, color: C.primary)),
-                            const SizedBox(width: 4),
-                            const Icon(Icons.arrow_forward,
-                                size: 16, color: C.primary),
-                          ]),
-                        ),
-                      ]),
-                    ]),
               ),
               const SizedBox(height: 22),
               Row(children: [
@@ -215,10 +139,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]),
                               const Spacer(),
                               Text(r.name, style: ts(15, w7)),
-                              Text(r.dialects,
+                              Text(r.words > 0
+                                      ? (r.dialects.isEmpty
+                                          ? 'Dialecte documenté'
+                                          : r.dialects)
+                                      : 'Données en cours de documentation',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: ts(11, w4, color: C.onVariant)),
+                                  style: ts(11, w4,
+                                      color: r.words > 0
+                                          ? C.onVariant
+                                          : C.tertiary)),
                               const SizedBox(height: 4),
                               Text('${r.dialectCount} dialectes',
                                   style: ts(11, w6, color: C.tertiary)),

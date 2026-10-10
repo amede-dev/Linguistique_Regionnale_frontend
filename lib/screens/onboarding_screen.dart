@@ -71,7 +71,7 @@ class OnboardingScreen extends StatelessWidget {
                       Positioned(
                           top: 26,
                           left: 16,
-                          child: _chip('Tsimihety', Icons.language)),
+                          child: _chip('Tsimihety', Icons.location_on)),
                       Positioned(
                           top: 70,
                           right: 14,
@@ -79,7 +79,7 @@ class OnboardingScreen extends StatelessWidget {
                       Positioned(
                           bottom: 90,
                           left: 12,
-                          child: _chip('Antandroy', Icons.map)),
+                          child: _chip('Antandroy', Icons.location_on)),
                       Positioned(
                           bottom: 44,
                           right: 22,
@@ -87,7 +87,7 @@ class OnboardingScreen extends StatelessWidget {
                       Positioned(
                         bottom: 14,
                         left: 20,
-                        child: _chip('Patrimoine régional', Icons.menu_book),
+                        child: _chip('Patrimoine régional', Icons.location_on),
                       ),
                     ]),
                   ),
