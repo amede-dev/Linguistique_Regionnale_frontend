@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
+import '../data/api/api_client.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +21,32 @@ class _SignupScreenState extends State<SignupScreen> {
   final _pwd = TextEditingController();
   final _pwd2 = TextEditingController();
   String? _dialect;
+  List<String> _regions = const [];
+  bool _regionsLoading = true;
   bool _hide = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRegions();
+  }
+
+  Future<void> _loadRegions() async {
+    try {
+      final data = await apiClient.regions();
+      if (!mounted) return;
+      setState(() {
+        _regions = data
+            .whereType<Map>()
+            .map((e) => '${e['name'] ?? ''}')
+            .where((name) => name.isNotEmpty)
+            .toList();
+        _regionsLoading = false;
+      });
+    } catch (_) {
+      if (mounted) setState(() => _regionsLoading = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -44,12 +70,17 @@ class _SignupScreenState extends State<SignupScreen> {
   String? _error;
   Future<void> _googleSignup() async {
     if (_busy) return;
+    if (_dialect == null) {
+      setState(() =>
+          _error = 'Sélectionnez votre région avant de continuer avec Google.');
+      return;
+    }
     setState(() {
       _busy = true;
       _error = null;
     });
     try {
-      await appState.loginWithGoogle();
+      await appState.loginWithGoogle(region: _dialect);
       if (mounted) goHome(context);
     } on DioException catch (e) {
       if (mounted)
@@ -152,12 +183,27 @@ class _SignupScreenState extends State<SignupScreen> {
                     ? null
                     : 'Adresse e-mail invalide',
               ),
-              const FieldLabel("Région ou dialecte d'attache",
-                  trailing: 'Optionnel'),
-              TextFormField(
-                onChanged: (v) => _dialect = v.trim().isEmpty ? null : v.trim(),
-                decoration: fieldDec('Ex. Analamanga, Merina, Betsimisaraka...',
+              const FieldLabel("Région d'attache", trailing: '* Obligatoire'),
+              DropdownButtonFormField<String>(
+                value: _dialect,
+                isExpanded: true,
+                decoration: fieldDec(
+                    _regionsLoading
+                        ? 'Chargement des régions...'
+                        : 'Sélectionnez votre région',
                     icon: Icons.explore_outlined),
+                items: _regions
+                    .map((region) => DropdownMenuItem<String>(
+                          value: region,
+                          child: Text(region, overflow: TextOverflow.ellipsis),
+                        ))
+                    .toList(),
+                onChanged: _regionsLoading
+                    ? null
+                    : (value) => setState(() => _dialect = value),
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Sélectionnez votre région'
+                    : null,
               ),
               const FieldLabel('Mot de passe'),
               TextFormField(

@@ -34,7 +34,7 @@ class ApiClient {
         'region': region
       }))
           .data!;
-  Future<Map<String, dynamic>> googleLogin() async {
+  Future<Map<String, dynamic>> googleLogin({String? region}) async {
     const id = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
     if (id.isEmpty) throw StateError('GOOGLE_SERVER_CLIENT_ID manquant');
     final account = await GoogleSignIn(
@@ -43,7 +43,7 @@ class ApiClient {
     final token = (await account.authentication).idToken;
     if (token == null || token.isEmpty) throw StateError('Jeton Google absent');
     return (await _dio.post<Map<String, dynamic>>('/auth/google',
-            data: {'idToken': token}))
+            data: {'idToken': token, if (region != null) 'region': region}))
         .data!;
   }
 

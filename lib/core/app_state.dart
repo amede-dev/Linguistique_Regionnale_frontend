@@ -51,11 +51,12 @@ class AppState extends ChangeNotifier {
     await loadFavorites();
   }
 
-  Future<void> loginWithGoogle() async {
-    final r = await apiClient.googleLogin();
+  Future<void> loginWithGoogle({String? region}) async {
+    final r = await apiClient.googleLogin(region: region);
     apiClient.setToken(r['token'] as String?);
     userEmail = r['email'] ?? '';
     userName = r['name'] ?? '';
+    userRegion = region ?? '';
     loggedIn = true;
     await loadProfile();
     await loadCatalog();
