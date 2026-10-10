@@ -378,10 +378,10 @@ const Map<String, String> _mg = {
   'Carte Linguistique': "Sarintanin'ny fiteny",
   'Région (Nord à Sud)': 'Faritra (Avaratra mankany Atsimo)',
   'Par région': 'Isaky ny faritra',
-  'Parcourez les 6 provinces et leurs parlers':
-      "Jereo ny faritany 6 sy ny fitenin'izy ireo",
-  'Découvrez la richesse des 6 grandes provinces et dialectes de la Grande Île.':
-      "Jereo ny haren'ny faritany lehibe 6 sy ny fitenim-paritra eto amin'ny Nosy Lehibe.",
+  'Parcourez les 23 régions administratives et leurs parlers':
+      "Jereo ny faritra 23 sy ny fitenin'izy ireo",
+  'Découvrez la richesse des 23 régions et de leurs variantes linguistiques.':
+      "Jereo ny haren'ny faritra 23 sy ny fitenim-paritra eto amin'ny Nosy Lehibe.",
   "Votre parler manque à l'appel ?": 'Tsy hita ve ny fitenin-dry zareo?',
   'Aidez-nous à sauvegarder les variantes locales oubliées.':
       'Ampio izahay hiaro ny fitenim-paritra hadino.',
@@ -473,7 +473,7 @@ const Map<String, String> _mg = {
   'LANGUE MALGACHE': 'LINGUISTIQUE RÉGIONALE',
   'Recherche de mots': 'Fikarohana Teny',
   'PATRIMOINE NATIONAL VIVANT': 'HAREM-PIRENENA VELONA',
-  '6 provinces': '6 Faritany',
+  '23 régions': '23 Faritra',
   'RECHERCHE AVANCÉE': 'FIKAROHANA MAROLAFY',
   'BELLES PAROLES': 'TENY SOA',
   '« Le lien fraternel est comme un fil fin : rompu, il peut se renouer. »':

@@ -113,7 +113,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
                 Text('PATRIMOINE NATIONAL VIVANT',
                     style: ts(11, w7, color: C.tertiary, ls: 1)),
                 const Spacer(),
-                const Pill('6 provinces',
+                const Pill('23 régions',
                     bg: C.secondaryContainer,
                     fg: C.onSecondaryContainer,
                     icon: Icons.verified),
@@ -121,7 +121,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
               const SizedBox(height: 4),
               Text('Explorer Madagascar', style: ts(24, w7, ls: -.2)),
               Text(
-                  'Découvrez la richesse des 6 grandes provinces et dialectes de la Grande Île.',
+                  'Découvrez la richesse des 23 régions et de leurs variantes linguistiques.',
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 14),
               CardBox(

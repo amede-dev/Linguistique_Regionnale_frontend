@@ -161,7 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Régions Linguistiques', style: ts(18, w6)),
-                        Text('Parcourez les 6 provinces et leurs parlers',
+                        Text(
+                            'Parcourez les 23 régions administratives et leurs parlers',
                             style: ts(12, w4, color: C.onVariant)),
                       ]),
                 ),
