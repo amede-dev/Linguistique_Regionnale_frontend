@@ -5,6 +5,7 @@ import '../core/i18n.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
+import 'change_password_screen.dart';
 
 final ImagePicker _picker = ImagePicker();
 
@@ -245,6 +246,12 @@ class ProfileScreen extends StatelessWidget {
                           value: appState.notifications,
                           activeColor: C.primaryContainer,
                           onChanged: appState.setNotifications)),
+                  _tile(
+                    Icons.lock_reset,
+                    'Modifier le mot de passe',
+                    'Changez le mot de passe de votre compte',
+                    onTap: () => push(context, const ChangePasswordScreen()),
+                  ),
                   const SizedBox(height: 20),
                   // Bouton ajusté à la taille de son texte, centré
                   Center(

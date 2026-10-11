@@ -66,6 +66,13 @@ class ApiClient {
     await _dio.delete<void>('/profile');
   }
 
+  Future<void> changePassword(String currentPassword, String newPassword) async {
+    await _dio.put<void>('/profile/password', data: {
+      'currentPassword': currentPassword,
+      'newPassword': newPassword,
+    });
+  }
+
   Future<List<dynamic>> regions() async =>
       (await _dio.get<List<dynamic>>('/regions')).data!;
   Future<List<dynamic>> words(

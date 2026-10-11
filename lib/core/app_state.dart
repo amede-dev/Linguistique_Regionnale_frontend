@@ -215,6 +215,9 @@ class AppState extends ChangeNotifier {
     }
     logout();
   }
+
+  Future<void> changePassword(String currentPassword, String newPassword) =>
+      apiClient.changePassword(currentPassword, newPassword);
 }
 
 final appState = AppState();

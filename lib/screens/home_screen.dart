@@ -139,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]),
                               const Spacer(),
                               Text(r.name, style: ts(15, w7)),
-                              Text(r.words > 0
+                              Text(
+                                  r.words > 0
                                       ? (r.dialects.isEmpty
                                           ? 'Dialecte documenté'
                                           : r.dialects)
