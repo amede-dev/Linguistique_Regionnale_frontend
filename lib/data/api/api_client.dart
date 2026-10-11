@@ -83,6 +83,16 @@ class ApiClient {
         if (type != null) 'type': type
       }))
           .data!;
+
+  Future<Map<String, dynamic>> askAi(String question,
+      {String? region, String? dialect}) async {
+    return (await _dio.post<Map<String, dynamic>>('/ai/ask', data: {
+      'question': question,
+      if (region != null && region.isNotEmpty) 'region': region,
+      if (dialect != null && dialect.isNotEmpty) 'dialect': dialect,
+    })).data!;
+  }
+
   Future<List<dynamic>> favorites() async =>
       (await _dio.get<List<dynamic>>('/favorites')).data!;
   Future<void> addFavorite(String id) async {

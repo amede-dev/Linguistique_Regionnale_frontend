@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:dio/dio.dart';
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
@@ -16,6 +17,9 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final _ctrl = TextEditingController();
+  bool _aiBusy = false;
+  String? _aiAnswer;
+  bool _aiCached = false;
   static const _types = [
     'Tous types',
     'Expressions',
@@ -28,6 +32,38 @@ class _SearchScreenState extends State<SearchScreen> {
   void dispose() {
     _ctrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _askAi() async {
+    final question = _ctrl.text.trim();
+    if (question.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Saisissez une question pour l’IA.')));
+      return;
+    }
+    setState(() => _aiBusy = true);
+    try {
+      final result = await appState.askAi(question,
+          region: appState.searchRegion == appState.allRegionsLabel
+              ? null
+              : appState.searchRegion);
+      if (mounted) {
+        setState(() {
+          _aiAnswer = '${result['answer'] ?? ''}';
+          _aiCached = result['cached'] == true;
+        });
+      }
+    } on DioException catch (e) {
+      if (mounted) {
+        final message = e.response?.data is Map
+            ? '${(e.response!.data as Map)['message'] ?? 'Service IA indisponible'}'
+            : 'Service IA indisponible';
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message)));
+      }
+    } finally {
+      if (mounted) setState(() => _aiBusy = false);
+    }
   }
 
   List<Word> _results() {
@@ -84,13 +120,67 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(height: 12),
                   TextField(
                     controller: _ctrl,
-                    onChanged: (_) => setState(() {}),
+                    onChanged: (_) => setState(() {
+                      _aiAnswer = null;
+                    }),
                     decoration: fieldDec(
                             'Rechercher un mot, une expression ou une signification...',
                             icon: Icons.search)
                         .copyWith(
                             border: pillBorder, enabledBorder: pillBorder),
                   ),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: FilledButton.icon(
+                      onPressed: _aiBusy ? null : _askAi,
+                      icon: _aiBusy
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2))
+                          : const Icon(Icons.auto_awesome, size: 17),
+                      label: Text(_aiBusy ? 'Analyse…' : 'Demander à l’IA'),
+                      style: FilledButton.styleFrom(
+                          backgroundColor: C.primaryContainer,
+                          shape: const StadiumBorder()),
+                    ),
+                  ),
+                  if (_aiAnswer != null) ...[
+                    const SizedBox(height: 10),
+                    CardBox(
+                      color: C.secondaryContainer,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.psychology,
+                              color: C.onSecondaryContainer),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    _aiCached
+                                        ? 'Réponse mémorisée'
+                                        : 'Réponse de l’IA',
+                                    style: ts(13, w7,
+                                        color: C.onSecondaryContainer)),
+                                const SizedBox(height: 4),
+                                Text(_aiAnswer!,
+                                    style: ts(13, w4,
+                                        color: C.onSecondaryContainer)),
+                                const SizedBox(height: 5),
+                                Text('Réponse à vérifier avant publication.',
+                                    style: ts(11, w5,
+                                        color: C.onSecondaryContainer)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(12),
