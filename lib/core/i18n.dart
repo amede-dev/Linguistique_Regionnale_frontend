@@ -523,6 +523,10 @@ const Map<String, String> _mg = {
 
   // Libellés autrefois écrits en malagasy dans le code (désormais en français)
   'Bonjour 👋': 'Manao ahoana 👋',
+  'Bonjour': 'Manao ahoana',
+  'Bonjour !': 'Manao ahoana!',
+  'Salut': 'Salama',
+  'Salut !': 'Salama!',
   'Bonjour à tous': 'Akory aby',
   'Bonjour à tous !': 'Akory aby',
   'Comment allez-vous ?': 'Manao ahoana?',
@@ -676,6 +680,11 @@ const Map<String, String> _mg = {
 // ---------------------------------------------------------------------------
 const Map<String, String> _fr = {
   'Malagasy': 'Malgache',
+  'Salama': 'Salut',
+  'Salama!': 'Salut !',
+  'SALAMA': 'SALUT',
+  'Manao ahoana': 'Bonjour',
+  'Manao ahoana!': 'Bonjour !',
   'Akory aby': 'Bonjour à tous',
   'Manao ahoana?': 'Comment allez-vous ?',
   'Manao ahoana, manao ahoana ianao?': 'Bonjour, comment allez-vous ?',
