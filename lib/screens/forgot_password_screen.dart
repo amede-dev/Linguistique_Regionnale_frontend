@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Text;
+import '../core/app_state.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
 import '../core/i18n.dart';
@@ -11,64 +13,60 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _key = GlobalKey<FormState>();
-  final _ctrl = TextEditingController();
-  bool _email = true;
+  final _email = TextEditingController();
+  final _code = TextEditingController();
+  final _next = TextEditingController();
+  final _confirm = TextEditingController();
+  bool _sent = false, _busy = false, _hideNext = true, _hideConfirm = true;
 
   @override
   void dispose() {
-    _ctrl.dispose();
+    _email.dispose();
+    _code.dispose();
+    _next.dispose();
+    _confirm.dispose();
     super.dispose();
   }
 
-  Widget _tab(String t, IconData i, bool sel, VoidCallback f) => Expanded(
-        child: GestureDetector(
-          onTap: f,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            height: 44,
-            decoration: BoxDecoration(
-              color: sel ? C.lowest : Colors.transparent,
-              borderRadius: BorderRadius.circular(99),
-              boxShadow: sel
-                  ? const [BoxShadow(color: Color(0x14000000), blurRadius: 6)]
-                  : null,
-            ),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(i, size: 18, color: sel ? C.primary : C.onVariant),
-              const SizedBox(width: 6),
-              Text(t, style: ts(12, w7, color: sel ? C.primary : C.onVariant)),
-            ]),
-          ),
-        ),
-      );
+  Future<void> _sendCode() async {
+    if (!_key.currentState!.validate() || _busy) return;
+    setState(() => _busy = true);
+    try {
+      await appState.requestPasswordReset(_email.text);
+      if (mounted) setState(() => _sent = true);
+    } on DioException catch (e) {
+      if (mounted) {
+        final data = e.response?.data;
+        final message = data is Map && data['message'] != null
+            ? '${data['message']}'
+            : 'Service d’e-mail indisponible.';
+        toast(context, message);
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
 
-  void _send() {
-    if (!_key.currentState!.validate()) return;
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: C.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        icon: const Icon(Icons.mark_email_read_outlined,
-            color: C.secondary, size: 36),
-        title: Text('Demande envoyée', style: ts(18, w7)),
-        content: Text(
-            _email
-                ? 'Un lien de réinitialisation a été envoyé à ${_ctrl.text.trim()}.'
-                : 'Un code de réinitialisation a été envoyé au +261 ${_ctrl.text.trim()}.',
-            style: ts(13, w4, color: C.onVariant)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              Navigator.of(context).pop();
-            },
-            child: Text('Retour à la connexion',
-                style: ts(13, w7, color: C.primary)),
-          ),
-        ],
-      ),
-    );
+  Future<void> _reset() async {
+    if (!_key.currentState!.validate() || _busy) return;
+    setState(() => _busy = true);
+    try {
+      await appState.resetPassword(_email.text, _code.text, _next.text);
+      if (mounted) {
+        toast(context, 'Mot de passe réinitialisé avec succès.');
+        Navigator.pop(context);
+      }
+    } on DioException catch (e) {
+      if (mounted) {
+        final data = e.response?.data;
+        final message = data is Map && data['message'] != null
+            ? '${data['message']}'
+            : 'Code invalide ou expiré.';
+        toast(context, message);
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   @override
@@ -84,75 +82,92 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
           child: Form(
             key: _key,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(
                 child: Container(
                   width: 84,
                   height: 84,
                   decoration: const BoxDecoration(
                       color: C.primaryFixed, shape: BoxShape.circle),
-                  child:
-                      const Icon(Icons.lock_reset, size: 42, color: C.primary),
+                  child: const Icon(Icons.lock_reset, size: 42, color: C.primary),
                 ),
               ),
               const SizedBox(height: 20),
-              Text('Mot de passe oublié ?', style: ts(24, w7)),
+              Text(_sent ? 'Réinitialiser le mot de passe' : 'Mot de passe oublié ?',
+                  style: ts(24, w7)),
               const SizedBox(height: 6),
               Text(
-                  "Ne vous inquiétez pas ! Saisissez l'adresse e-mail associée à votre compte et un code sécurisé pour réinitialiser votre accès.",
+                  _sent
+                      ? 'Saisissez le code reçu par e-mail et choisissez un nouveau mot de passe.'
+                      : "Saisissez l'adresse e-mail associée à votre compte pour recevoir un code sécurisé.",
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 18),
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                    color: C.container,
-                    borderRadius: BorderRadius.circular(99)),
-                child: Row(children: [
-                  _tab(
-                      'Adresse e-mail',
-                      Icons.mail_outline,
-                      _email,
-                      () => setState(() {
-                            _email = true;
-                            _ctrl.clear();
-                          })),
-                  _tab(
-                      'SMS (Madagascar)',
-                      Icons.sms_outlined,
-                      !_email,
-                      () => setState(() {
-                            _email = false;
-                            _ctrl.clear();
-                          })),
-                ]),
-              ),
-              FieldLabel(_email
-                  ? 'Adresse e-mail'
-                  : 'Numéro local (Telma, Orange, Airtel)'),
+              const FieldLabel('Adresse e-mail'),
               TextFormField(
-                controller: _ctrl,
-                keyboardType:
-                    _email ? TextInputType.emailAddress : TextInputType.phone,
-                decoration: _email
-                    ? fieldDec('votre.email@domaine.mg',
-                        icon: Icons.mail_outline)
-                    : fieldDec('034 00 000 00', icon: Icons.phone_iphone)
-                        .copyWith(prefixText: '+261  '),
-                validator: (v) {
-                  final t = (v ?? '').trim();
-                  if (_email)
-                    return emailRe.hasMatch(t)
-                        ? null
-                        : 'Adresse e-mail invalide';
-                  return t.replaceAll(' ', '').length >= 9
-                      ? null
-                      : 'Numéro invalide';
-                },
+                controller: _email,
+                readOnly: _sent,
+                keyboardType: TextInputType.emailAddress,
+                decoration: fieldDec('votre.email@domaine.mg', icon: Icons.mail_outline),
+                validator: (v) => emailRe.hasMatch((v ?? '').trim())
+                    ? null
+                    : 'Adresse e-mail invalide',
               ),
+              if (_sent) ...[
+                const FieldLabel('Code de réinitialisation'),
+                TextFormField(
+                  controller: _code,
+                  keyboardType: TextInputType.number,
+                  decoration: fieldDec('123456', icon: Icons.pin_outlined),
+                  validator: (v) => (v ?? '').trim().length == 6
+                      ? null
+                      : 'Saisissez le code à 6 chiffres',
+                ),
+                const FieldLabel('Nouveau mot de passe'),
+                TextFormField(
+                  controller: _next,
+                  obscureText: _hideNext,
+                  decoration: fieldDec('8 caractères minimum',
+                      icon: Icons.lock_reset,
+                      suffix: IconButton(
+                          onPressed: () => setState(() => _hideNext = !_hideNext),
+                          icon: Icon(_hideNext
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined))),
+                  validator: (v) => (v ?? '').length >= 8
+                      ? null
+                      : '8 caractères minimum',
+                ),
+                const FieldLabel('Confirmation du mot de passe'),
+                TextFormField(
+                  controller: _confirm,
+                  obscureText: _hideConfirm,
+                  decoration: fieldDec('••••••••', icon: Icons.verified_user_outlined,
+                      suffix: IconButton(
+                          onPressed: () => setState(() => _hideConfirm = !_hideConfirm),
+                          icon: Icon(_hideConfirm
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined))),
+                  validator: (v) => v == _next.text
+                      ? null
+                      : 'Les mots de passe ne correspondent pas',
+                ),
+              ],
               const SizedBox(height: 18),
-              PBtn('Envoyer le lien de réinitialisation',
-                  icon: Icons.send, onTap: _send),
+              PBtn(
+                _busy
+                    ? 'Envoi en cours...'
+                    : (_sent ? 'Réinitialiser le mot de passe' : 'Envoyer le code'),
+                icon: Icons.send,
+                onTap: _busy ? null : (_sent ? _reset : _sendCode),
+              ),
+              if (_sent)
+                Center(
+                  child: TextButton(
+                    onPressed: _busy ? null : () => setState(() => _sent = false),
+                    child: Text('Renvoyer un code',
+                        style: ts(12, w6, color: C.primary)),
+                  ),
+                ),
               const SizedBox(height: 20),
               Row(children: [
                 const Icon(Icons.verified_user, size: 16, color: C.secondary),

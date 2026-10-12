@@ -26,6 +26,21 @@ class ApiClient {
       (await _dio.post<Map<String, dynamic>>('/auth/login',
               data: {'email': email, 'password': password}))
           .data!;
+
+  Future<Map<String, dynamic>> requestPasswordReset(String email,
+      {String? language}) async =>
+      (await _dio.post<Map<String, dynamic>>('/auth/forgot-password', data: {
+        'email': email.trim(),
+        if (language != null) 'language': language,
+      })).data!;
+
+  Future<Map<String, dynamic>> resetPassword(String email, String code,
+          String newPassword) async =>
+      (await _dio.post<Map<String, dynamic>>('/auth/reset-password', data: {
+        'email': email.trim(),
+        'code': code.trim(),
+        'newPassword': newPassword,
+      })).data!;
   Future<Map<String, dynamic>> register(
           String name, String email, String password, {String? region}) async =>
       (await _dio.post<Map<String, dynamic>>('/auth/register', data: {

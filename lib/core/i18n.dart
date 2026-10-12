@@ -259,12 +259,14 @@ const Map<String, String> _mg = {
   'Continuer avec Apple': "Hanohy amin'ny Apple",
   'Mot de passe': 'Teny miafina',
   'Mot de passe oublié ?': 'Adino ny teny miafina?',
+  'Mot de passe oublié': 'Adino ny teny miafina',
   'Adresse e-mail': 'Adiresy mailaka',
   'Adresse e-mail valide': 'Adiresy mailaka manan-kery',
   'Adresse e-mail invalide': 'Adiresy mailaka diso',
   'Confirmation du mot de passe': 'Fanamarinana ny teny miafina',
   'Les mots de passe ne correspondent pas': 'Tsy mitovy ny teny miafina',
   '8 caractères min. • 1 chiffre': 'Tarehintsoratra 8 farafahakeliny • isa 1',
+  '8 caractères minimum': 'Tarehintsoratra 8 farafahakeliny',
   'Faible': 'Malemy',
   'Moyenne': 'Antonony',
   'Robuste': 'Matanjaka',
@@ -320,16 +322,30 @@ const Map<String, String> _mg = {
   'Un pays, plusieurs façons de parler.': 'Firenena iray, fomba fiteny maro.',
   "Écoutez des expressions authentiques, découvrez les nuances régionales et participez à la sauvegarde de notre patrimoine oral.":
       "Henoy ny feo tena izy, jereo ny fahasamihafan'ny faritra ary miaraha miaro ny lovantsofinay.",
+  'Découvrez les mots, expressions et nuances régionales de Madagascar.':
+      'Fantaro ny teny, fitenenana ary ny fahasamihafan’ny fitenim-paritra eto Madagasikara.',
   "Chaque mot, intonation ou variante locale est vérifié par nos linguistes et modérateurs communautaires avant d'intégrer l'encyclopédie sonore.":
       "Ny teny, ny feo na ny fitenim-paritra rehetra dia hamarinin'ny mpahay teny sy ny mpandamina ao amin'ny fiarahamonina aloha vao tafiditra ao amin'ny rakibolana ara-peo.",
   'Validation communautaire garantie':
       "Fanamarinana avy amin'ny fiarahamonina voaro",
   'Données linguistiques protégées • Vos contributions données et dialectes restent saufs':
       "Voaaro ny angona ara-piteny • Azo antoka ny fandraisanao anjara",
+  'Données linguistiques protégées • Vos contributions restent sauvegardées':
+      'Voaaro ny angona ara-piteny • Voatahiry ny fandraisanao anjara',
+  "Ne vous inquiétez pas ! Saisissez l'adresse e-mail associée à votre compte et un code sécurisé pour réinitialiser votre accès.":
+      "Aza manahy! Ampidiro ny adiresy mailaka mifandray amin'ny kaontinao sy kaody azo antoka hamerenana ny fidiranao.",
+  'Authentification sécurisée par le serveur':
+      'Fanamarinana azo antoka avy amin’ny mpizara',
 
   // Accueil
   'Explorez les trésors dialectaux de Madagascar':
       'Hizaha ny harena ara-fitenim-paritra eto Madagasikara',
+  'Participez à la sauvegarde et à la transmission vivante du patrimoine linguistique de Madagascar.':
+      'Mandraisa anjara amin’ny fiarovana sy fampitana velona ny lova ara-piteny eto Madagasikara.',
+  "Région d'attache": 'Faritra niaviana',
+  'Sélectionnez votre région': 'Fidio ny faritrao',
+  'Connectez-vous pour retrouver vos favoris, synchroniser vos données et participer à la communauté.':
+      'Midira mba hahita ny ankafizinao, hampifanaraka ny angonao ary handray anjara amin’ny fiarahamonina.',
   'Mots Tendance': 'Teny malaza',
   'Tout voir': 'Hijery rehetra',
   'PERLE DU JOUR': 'TENY TSARA ANDROANY',

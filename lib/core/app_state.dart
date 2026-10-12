@@ -219,6 +219,13 @@ class AppState extends ChangeNotifier {
   Future<void> changePassword(String currentPassword, String newPassword) =>
       apiClient.changePassword(currentPassword, newPassword);
 
+  Future<Map<String, dynamic>> requestPasswordReset(String email) =>
+      apiClient.requestPasswordReset(email, language: language);
+
+  Future<Map<String, dynamic>> resetPassword(
+          String email, String code, String newPassword) =>
+      apiClient.resetPassword(email, code, newPassword);
+
   Future<Map<String, dynamic>> askAi(String question,
           {String? region, String? dialect, String? language}) =>
       apiClient.askAi(question,

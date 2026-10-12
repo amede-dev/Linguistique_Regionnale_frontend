@@ -4,6 +4,7 @@ import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
 import 'signup_screen.dart';
+import 'forgot_password_screen.dart';
 import '../core/i18n.dart';
 import 'package:dio/dio.dart';
 
@@ -142,6 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text('Se souvenir de moi', style: ts(12, w5)),
                 const Spacer(),
               ]),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => push(context, const ForgotPasswordScreen()),
+                  child: Text('Mot de passe oublié ?',
+                      style: ts(12, w6, color: C.primary)),
+                ),
+              ),
               const SizedBox(height: 8),
               if (_error != null)
                 Text(_error!, style: ts(12, w6, color: C.error)),
