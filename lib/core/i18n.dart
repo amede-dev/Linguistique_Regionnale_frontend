@@ -144,6 +144,7 @@ final List<(RegExp, String Function(Match))> _rules = [
     (m) => 'faritra ara-piteny lehibe ${m[1]}'
   ),
   (RegExp(r'^Nuance : (.*)$'), (m) => 'Fahasamihafana : ${m[1]}'),
+  (RegExp(r'^Dialectes : (.*)$'), (m) => 'Fitenim-paritra : ${m[1]}'),
   (RegExp(r'^Force : (.*)$'), (m) => 'Hery : ${tr(m[1]!)}'),
   (RegExp(r'^Information régionale • (.*)$'), (m) => 'Feo teraka • ${m[1]}'),
   (RegExp(r'^Salutation (.*) : (.*)$'), (m) => 'Fiarahabana ${m[1]} : ${m[2]}'),

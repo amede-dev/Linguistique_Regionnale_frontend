@@ -84,7 +84,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
             if (r.dialects.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text('${tr('Dialectes')} : ${r.dialects}',
+                child: Text('Dialectes : ${r.dialects}',
                     style: ts(12, w6, color: C.onVariant)),
               ),
             for (final w in _greetings(r))
