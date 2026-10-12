@@ -64,6 +64,39 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _editPhone(BuildContext context) async {
+    final controller = TextEditingController(text: appState.userPhone);
+    final value = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('Numéro de téléphone', style: ts(18, w7)),
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.phone,
+          decoration: fieldDec('0382099195', icon: Icons.phone_outlined),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text('Annuler', style: ts(14, w6)),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, controller.text),
+            child: Text('Enregistrer', style: ts(14, w6, color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (value == null || value.trim().isEmpty || !context.mounted) return;
+    try {
+      await appState.updatePhone(value);
+      if (context.mounted) toast(context, 'Numéro enregistré');
+    } catch (_) {
+      if (context.mounted) toast(context, 'Numéro malgache invalide ou déjà utilisé');
+    }
+  }
+
   void _showPhotoOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -217,6 +250,14 @@ class ProfileScreen extends StatelessWidget {
                           icon: Icons.location_on),
                     ),
                   ],
+                  _tile(
+                    Icons.phone_outlined,
+                    'Numéro de téléphone',
+                    appState.userPhone.isEmpty
+                        ? 'Ajoutez un numéro pour recevoir les codes SMS'
+                        : appState.userPhone,
+                    onTap: () => _editPhone(context),
+                  ),
                   _section("Paramètres de l'application"),
                   _tile(
                     Icons.translate,

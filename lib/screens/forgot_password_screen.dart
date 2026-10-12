@@ -14,14 +14,17 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _key = GlobalKey<FormState>();
   final _email = TextEditingController();
+  final _phone = TextEditingController();
   final _code = TextEditingController();
   final _next = TextEditingController();
   final _confirm = TextEditingController();
   bool _sent = false, _busy = false, _hideNext = true, _hideConfirm = true;
+  bool _sms = false;
 
   @override
   void dispose() {
     _email.dispose();
+    _phone.dispose();
     _code.dispose();
     _next.dispose();
     _confirm.dispose();
@@ -32,14 +35,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (!_key.currentState!.validate() || _busy) return;
     setState(() => _busy = true);
     try {
-      await appState.requestPasswordReset(_email.text);
+      if (_sms) {
+        await appState.requestPasswordResetSms(_phone.text);
+      } else {
+        await appState.requestPasswordReset(_email.text);
+      }
       if (mounted) setState(() => _sent = true);
     } on DioException catch (e) {
       if (mounted) {
         final data = e.response?.data;
         final message = data is Map && data['message'] != null
             ? '${data['message']}'
-            : 'Service d’e-mail indisponible.';
+            : (_sms ? 'Service SMS indisponible.' : 'Service d’e-mail indisponible.');
         toast(context, message);
       }
     } finally {
@@ -51,7 +58,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (!_key.currentState!.validate() || _busy) return;
     setState(() => _busy = true);
     try {
-      await appState.resetPassword(_email.text, _code.text, _next.text);
+      if (_sms) {
+        await appState.resetPasswordSms(_phone.text, _code.text, _next.text);
+      } else {
+        await appState.resetPassword(_email.text, _code.text, _next.text);
+      }
       if (mounted) {
         toast(context, 'Mot de passe réinitialisé avec succès.');
         Navigator.pop(context);
@@ -98,20 +109,55 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 6),
               Text(
                   _sent
-                      ? 'Saisissez le code reçu par e-mail et choisissez un nouveau mot de passe.'
-                      : "Saisissez l'adresse e-mail associée à votre compte pour recevoir un code sécurisé.",
+                      ? (_sms
+                          ? 'Saisissez le code reçu par SMS et choisissez un nouveau mot de passe.'
+                          : 'Saisissez le code reçu par e-mail et choisissez un nouveau mot de passe.')
+                      : (_sms
+                          ? 'Saisissez le numéro associé à votre compte pour recevoir un code sécurisé par SMS.'
+                          : "Saisissez l'adresse e-mail associée à votre compte pour recevoir un code sécurisé."),
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 18),
-              const FieldLabel('Adresse e-mail'),
-              TextFormField(
-                controller: _email,
-                readOnly: _sent,
-                keyboardType: TextInputType.emailAddress,
-                decoration: fieldDec('votre.email@domaine.mg', icon: Icons.mail_outline),
-                validator: (v) => emailRe.hasMatch((v ?? '').trim())
-                    ? null
-                    : 'Adresse e-mail invalide',
-              ),
+              if (!_sent)
+                Row(children: [
+                  Expanded(
+                    child: ChoiceChip(
+                      label: const Text('E-mail'),
+                      selected: !_sms,
+                      onSelected: (_) => setState(() => _sms = false),
+                    ),
+                  ),
+                  Expanded(
+                    child: ChoiceChip(
+                      label: const Text('SMS'),
+                      selected: _sms,
+                      onSelected: (_) => setState(() => _sms = true),
+                    ),
+                  ),
+                ]),
+              FieldLabel(_sms ? 'Numéro de téléphone' : 'Adresse e-mail'),
+              if (_sms)
+                TextFormField(
+                  controller: _phone,
+                  readOnly: _sent,
+                  keyboardType: TextInputType.phone,
+                  decoration: fieldDec('0382099195', icon: Icons.phone_outlined),
+                  validator: (v) {
+                    final phone = (v ?? '').replaceAll(RegExp(r'[\s()-]'), '');
+                    return RegExp(r'^(?:0|\+261|261)3\d{8}$').hasMatch(phone)
+                        ? null
+                        : 'Numéro malgache invalide';
+                  },
+                )
+              else
+                TextFormField(
+                  controller: _email,
+                  readOnly: _sent,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: fieldDec(tr('votre.email@domaine.mg'), icon: Icons.mail_outline),
+                  validator: (v) => emailRe.hasMatch((v ?? '').trim())
+                      ? null
+                      : 'Adresse e-mail invalide',
+                ),
               if (_sent) ...[
                 const FieldLabel('Code de réinitialisation'),
                 TextFormField(
@@ -126,7 +172,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 TextFormField(
                   controller: _next,
                   obscureText: _hideNext,
-                  decoration: fieldDec('8 caractères minimum',
+                  decoration: fieldDec(tr('8 caractères minimum'),
                       icon: Icons.lock_reset,
                       suffix: IconButton(
                           onPressed: () => setState(() => _hideNext = !_hideNext),

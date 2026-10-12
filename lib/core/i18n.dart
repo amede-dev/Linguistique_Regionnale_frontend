@@ -206,7 +206,6 @@ const Map<String, String> _mg = {
   'Mes Favoris': 'Ny ankafiziko',
   'Profil': 'Mombamomba',
   'Détail Mot': 'Antsipiriany ny teny',
-  'Contribuer': 'Handray anjara',
   'Annuler': 'Foana',
   'Terminer': 'Vita',
   'Passer': 'Handingana',
@@ -260,9 +259,38 @@ const Map<String, String> _mg = {
   'Mot de passe': 'Teny miafina',
   'Mot de passe oublié ?': 'Adino ny teny miafina?',
   'Mot de passe oublié': 'Adino ny teny miafina',
+  'Réinitialiser le mot de passe': 'Hamerina ny teny miafina',
+  'Saisissez le code reçu par e-mail et choisissez un nouveau mot de passe.':
+      'Ampidiro ny kaody voaray amin’ny mailaka ary fidio ny teny miafina vaovao.',
+  "Saisissez l'adresse e-mail associée à votre compte pour recevoir un code sécurisé.":
+      'Ampidiro ny adiresy mailaka mifandray amin’ny kaontinao handraisana kaody azo antoka.',
+  'Envoyer le code': 'Alefaso ny kaody',
+  'Renvoyer un code': 'Alefaso indray ny kaody',
+  'Envoi en cours...': 'Eo am-pandefasana...',
+  'Code de réinitialisation': 'Kaody famerenana',
+  'Saisissez le code à 6 chiffres': 'Ampidiro ny kaody misy tarehimarika 6',
+  'Code invalide ou expiré.': 'Kaody diso na lany daty.',
+  'Service d’e-mail indisponible.': 'Tsy mandeha ny serivisy mailaka.',
+  'Service SMS indisponible.': 'Tsy mandeha ny serivisy SMS.',
+  'Mot de passe réinitialisé avec succès.': 'Voaova soa aman-tsara ny teny miafina.',
   'Adresse e-mail': 'Adiresy mailaka',
+  'E-mail': 'Mailaka',
+  'SMS': 'SMS',
+  'Numéro de téléphone': 'Laharan-telefaona',
+  'Pour les codes SMS': 'Ho an’ny kaody SMS',
+  'Numéro malgache invalide': 'Laharana Malagasy tsy manan-kery',
+  'Saisissez le code reçu par SMS et choisissez un nouveau mot de passe.':
+      'Ampidiro ny kaody voaray amin’ny SMS ary fidio ny teny miafina vaovao.',
+  'Saisissez le numéro associé à votre compte pour recevoir un code sécurisé par SMS.':
+      'Ampidiro ny laharana mifandray amin’ny kaontinao handraisana kaody azo antoka amin’ny SMS.',
+  'votre.email@domaine.mg': 'ohatra.email@gmail.mg',
   'Adresse e-mail valide': 'Adiresy mailaka manan-kery',
   'Adresse e-mail invalide': 'Adiresy mailaka diso',
+  'Numéro enregistré': 'Voatahiry ny laharana',
+  'Ajoutez un numéro pour recevoir les codes SMS':
+      'Ampio laharana handraisana kaody SMS',
+  'Numéro malgache invalide ou déjà utilisé':
+      'Laharana Malagasy tsy manan-kery na efa ampiasaina',
   'Confirmation du mot de passe': 'Fanamarinana ny teny miafina',
   'Les mots de passe ne correspondent pas': 'Tsy mitovy ny teny miafina',
   '8 caractères min. • 1 chiffre': 'Tarehintsoratra 8 farafahakeliny • isa 1',
@@ -351,10 +379,6 @@ const Map<String, String> _mg = {
   'PERLE DU JOUR': 'TENY TSARA ANDROANY',
   'MOT DU JOUR': 'TENY ANDROANY',
   'Mis à jour à 06:00': "Nohavaozina tamin'ny 06:00",
-  'Participez au patrimoine': "Miaraha miaro ny lova",
-  "Connaissez-vous une variante ? Saisissez la mots d'un aîné ou soumettez une expression typique de votre région pour enrichir l'encyclopédie sonore.":
-      "Mahalala fitenim-paritra hafa ve ianao? Alaharo ny feon'ny anti-panahy na ateraho ny fitenenana mahazatra any amin'ny faritrao hanan-karena ny rakibolana ara-peo.",
-  'Participer': 'Handray anjara',
   'Explorer': 'Hizaha',
   'Découvrir': 'Hijery',
   'Voir fiche': "Hijery ny antsipiriany",
@@ -452,18 +476,14 @@ const Map<String, String> _mg = {
       "Jereo ny faritra 23 sy ny fitenin'izy ireo",
   'Découvrez la richesse des 23 régions et de leurs variantes linguistiques.':
       "Jereo ny haren'ny faritra 23 sy ny fitenim-paritra eto amin'ny Nosy Lehibe.",
-  "Votre parler manque à l'appel ?": 'Tsy hita ve ny fitenin-dry zareo?',
-  'Aidez-nous à sauvegarder les variantes locales oubliées.':
-      'Ampio izahay hiaro ny fitenim-paritra hadino.',
-  'Proposer une variante pour ma région':
-      "Hanolotra fitenim-paritra ho an'ny faritro",
-  'Votre dialecte manque ?': 'Tsy hita ve ny fitenim-paritra?',
-  'Ajouter un dialecte': 'Hanampy fitenim-paritra',
   '18 Régions': 'Faritra 18',
   '18 mots': 'Feo 18',
   'Expressions': 'Fitenenana',
   'Dialecte principal': 'Fitenim-paritra lehibe',
   'Salutations': 'Fiarahabana',
+  'Formule de salutation.': 'Fomba fiarahabana.',
+  'Salutation ou souhait de bonne santé.':
+      'Fiarahabana na firariantsoa ho salama.',
   'Vérifié': 'Voamarina',
   'Actif': 'Mavitrika',
   'En cours': 'Mbola mandeha',
@@ -483,51 +503,6 @@ const Map<String, String> _mg = {
   'Arrêter': 'Ajanony',
   'Appuyez pour arrêter': 'Tsindrio hijanonana',
 
-  // Contribution
-  'Contribuer au patrimoine': "Handray anjara amin'ny lova",
-  'Contribuez en enregistrant un mot de votre région.':
-      "Handray anjara amin'ny fandraketana teny avy any amin'ny faritrao.",
-  'Proposer un mot de votre région': "Hanolotra teny avy any amin'ny faritrao",
-  'Votre mots préserve notre culture': 'Ny feonao dia miaro ny kolontsaintsika',
-  '1. Terme & Contexte': '1. Teny sy zava-misy',
-  '2. Contexte du mot': '2. Studio feo',
-  'Étape 1/2': 'Dingana 1/2',
-  'Étape 2/2': 'Dingana 2/2',
-  'Mot ou expression en dialecte': "Teny na fitenenana amin'ny fitenim-paritra",
-  'Catégorie thématique': 'Sokajy',
-  'Niveau de langue': "Haavon'ny fiteny",
-  'Signification & traduction en français / malagasy standard':
-      "Dikany sy fandikan-teny amin'ny frantsay / malagasy ofisialy",
-  "Exemple d'utilisation dans une phrase":
-      'Ohatra fampiasana ao anaty fehezanteny',
-  'Votre ville / terroir d\'accentuation':
-      'Ny tanànanao / faritra misy ny anjaranao',
-  'Sélectionnez votre terroir': 'Fidio ny faritrao',
-  'Sélectionnez une région linguistique': 'Fidio ny faritra ara-piteny',
-  'Décrivez le sens du mot...': 'Farito ny dikan\'ny teny...',
-  'Enregistrer comme brouillon': 'Tehirizo ho volavolan-dahatsoratra',
-  'Brouillon enregistré sur cet appareil':
-      "Voatahiry ao amin'ity finday ity ny volavolan-dahatsoratra",
-  'Soumettre pour validation': 'Alefa ho fanamarinana',
-  'Revue linguistique sous 48h. Vous gagnerez 25 points de réputation culturelle.':
-      "Hojerena amin'ny mpahay teny anatin'ny 48 ora. Handray isa 25 amin'ny lazanao ara-kolontsaina ianao.",
-  'Merci pour votre contribution !': 'Misaotra ny anjara birakao!',
-  'Prêt à contribuer': 'Vonona ny mikrô',
-  'Appuyez pour enregistrer votre expression native':
-      'Tsindrio hitehirizana ny fanononanao',
-  'Enregistrement…': 'Mandraikitra…',
-  'Enregistrement prêt ✓': 'Vonona ny rakitra ✓',
-  'Enregistrer': 'Tehirizo',
-  "Saisissez d'abord votre expression": 'Alaharo aloha ny fanononanao',
-  'Décrivez clairement le mot 2 fois à mots haute dans un formulaire complet.':
-      "Vakio tsara indroa amin'ny feo avo ny teny ao amin'ny toerana mangina.",
-  'Qualité : 48 kHz HD • Réduction de bruit active':
-      'Kalitao : 48 kHz HD • Mandeha ny fampihenana tabataba',
-  '👋 Salutation': '👋 Fiarahabana',
-  '🌊 Nature & Mer': '🌊 Natiora sy Ranomasina',
-  '🏡 Vie quotidienne': "🏡 Fiainana andavan'andro",
-  '❤️ Émotion & Sagesse': '❤️ Fihetseham-po sy Fahendrena',
-  '📜 Proverbe (Ohabolana)': '📜 Ohabolana',
   'Famille & Respect': 'Fianakaviana sy Fanajana',
   'Mots isolés': 'Teny tokana',
   'Proverbes (Ohabolana)': 'Ohabolana',

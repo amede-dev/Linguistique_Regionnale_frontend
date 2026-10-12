@@ -7,7 +7,7 @@ import 'i18n.dart' show languageNotifier;
 class AppState extends ChangeNotifier {
   bool loggedIn = false, loading = true;
   String? error;
-  String userName = '', userEmail = '', userRegion = '';
+  String userName = '', userEmail = '', userPhone = '', userRegion = '';
   int tab = 0;
   String searchRegion = 'Toutes les régions',
       searchType = 'Tous types',
@@ -64,13 +64,14 @@ class AppState extends ChangeNotifier {
     await loadFavorites();
   }
 
-  Future<void> register(String name, String email, String password,
+  Future<void> register(String name, String email, String phone, String password,
       {String? region}) async {
-    final r = await apiClient.register(name.trim(), email.trim(), password,
+    final r = await apiClient.register(name.trim(), email.trim(), phone.trim(), password,
         region: region);
     apiClient.setToken(r['token'] as String?);
     userName = name.trim();
     userEmail = '${r['email'] ?? email}';
+    userPhone = phone.trim();
     userRegion = region ?? '';
     loggedIn = true;
     await loadProfile();
@@ -166,6 +167,7 @@ class AppState extends ChangeNotifier {
     apiClient.setToken(null);
     userName = '';
     userEmail = '';
+    userPhone = '';
     userRegion = '';
     favorites.clear();
     tab = 0;
@@ -179,6 +181,7 @@ class AppState extends ChangeNotifier {
       final p = await apiClient.profile();
       userName = '${p['name'] ?? userName}';
       userEmail = '${p['email'] ?? userEmail}';
+      userPhone = '${p['phone'] ?? userPhone}';
       userRegion = '${p['region'] ?? ''}';
       final photo = '${p['photo_url'] ?? ''}';
       profilePhoto = photo.isEmpty ? null : photo;
@@ -222,9 +225,22 @@ class AppState extends ChangeNotifier {
   Future<Map<String, dynamic>> requestPasswordReset(String email) =>
       apiClient.requestPasswordReset(email, language: language);
 
+  Future<Map<String, dynamic>> requestPasswordResetSms(String phone) =>
+      apiClient.requestPasswordResetSms(phone, language: language);
+
   Future<Map<String, dynamic>> resetPassword(
           String email, String code, String newPassword) =>
       apiClient.resetPassword(email, code, newPassword);
+
+  Future<Map<String, dynamic>> resetPasswordSms(
+          String phone, String code, String newPassword) =>
+      apiClient.resetPasswordSms(phone, code, newPassword);
+
+  Future<void> updatePhone(String phone) async {
+    final p = await apiClient.updatePhone(phone);
+    userPhone = '${p['phone'] ?? phone}';
+    notifyListeners();
+  }
 
   Future<Map<String, dynamic>> askAi(String question,
           {String? region, String? dialect, String? language}) =>

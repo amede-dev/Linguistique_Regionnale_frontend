@@ -18,6 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _key = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _email = TextEditingController();
+  final _phone = TextEditingController();
   final _pwd = TextEditingController();
   final _pwd2 = TextEditingController();
   String? _dialect;
@@ -52,6 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _name.dispose();
     _email.dispose();
+    _phone.dispose();
     _pwd.dispose();
     _pwd2.dispose();
     super.dispose();
@@ -102,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
       _error = null;
     });
     try {
-      await appState.register(_name.text, _email.text, _pwd.text,
+      await appState.register(_name.text, _email.text, _phone.text, _pwd.text,
           region: _dialect);
       if (mounted) goHome(context);
     } on DioException catch (e) {
@@ -182,6 +184,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 validator: (v) => emailRe.hasMatch((v ?? '').trim())
                     ? null
                     : 'Adresse e-mail invalide',
+              ),
+              const FieldLabel('Numéro de téléphone', trailing: 'Pour les codes SMS'),
+              TextFormField(
+                controller: _phone,
+                keyboardType: TextInputType.phone,
+                decoration: fieldDec('0382099195', icon: Icons.phone_outlined),
+                validator: (v) => RegExp(r'^(?:0|\+261|261)3\d{8}$')
+                        .hasMatch((v ?? '').replaceAll(RegExp(r'[\s()-]'), ''))
+                    ? null
+                    : 'Numéro malgache invalide',
               ),
               const FieldLabel("Région d'attache", trailing: '* Obligatoire'),
               DropdownButtonFormField<String>(

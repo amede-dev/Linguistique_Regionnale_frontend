@@ -34,6 +34,13 @@ class ApiClient {
         if (language != null) 'language': language,
       })).data!;
 
+  Future<Map<String, dynamic>> requestPasswordResetSms(String phone,
+      {String? language}) async =>
+      (await _dio.post<Map<String, dynamic>>('/auth/forgot-password-sms', data: {
+        'phone': phone.trim(),
+        if (language != null) 'language': language,
+      })).data!;
+
   Future<Map<String, dynamic>> resetPassword(String email, String code,
           String newPassword) async =>
       (await _dio.post<Map<String, dynamic>>('/auth/reset-password', data: {
@@ -41,11 +48,21 @@ class ApiClient {
         'code': code.trim(),
         'newPassword': newPassword,
       })).data!;
+
+  Future<Map<String, dynamic>> resetPasswordSms(String phone, String code,
+          String newPassword) async =>
+      (await _dio.post<Map<String, dynamic>>('/auth/reset-password-sms', data: {
+        'phone': phone.trim(),
+        'code': code.trim(),
+        'newPassword': newPassword,
+      })).data!;
   Future<Map<String, dynamic>> register(
-          String name, String email, String password, {String? region}) async =>
+          String name, String email, String phone, String password,
+          {String? region}) async =>
       (await _dio.post<Map<String, dynamic>>('/auth/register', data: {
         'name': name,
         'email': email,
+        'phone': phone,
         'password': password,
         'region': region
       }))
@@ -68,6 +85,11 @@ class ApiClient {
 
   Future<Map<String, dynamic>> profile() async =>
       (await _dio.get<Map<String, dynamic>>('/profile')).data!;
+
+  Future<Map<String, dynamic>> updatePhone(String phone) async =>
+      (await _dio.put<Map<String, dynamic>>('/profile/phone', data: {
+        'phone': phone.trim(),
+      })).data!;
 
   Future<Map<String, dynamic>> uploadProfilePhoto(String path) async {
     final form = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
