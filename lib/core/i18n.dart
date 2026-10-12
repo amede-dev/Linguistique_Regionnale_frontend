@@ -274,6 +274,7 @@ const Map<String, String> _mg = {
   'Service SMS indisponible.': 'Tsy mandeha ny serivisy SMS.',
   'Mot de passe réinitialisé avec succès.': 'Voaova soa aman-tsara ny teny miafina.',
   'Adresse e-mail': 'Adiresy mailaka',
+  'nom@exemple.mg': 'anarana@ohatra.mg',
   'E-mail': 'Mailaka',
   'SMS': 'SMS',
   'Numéro de téléphone': 'Laharan-telefaona',
@@ -391,6 +392,11 @@ const Map<String, String> _mg = {
   'Que recherchez-vous ?': 'Inona no tadiavinao?',
   'Rechercher un mot, une expression ou une signification...':
       'Mitadiava teny, fitenenana na dikany...',
+  'Pertinence': 'Fifanarahana',
+  'Région (Nord à Sud)': 'Faritra (Avaratra mankany Atsimo)',
+  'Donnée unitaire à valider': 'Angona tokana tokony hohamarinina',
+  'Données unitaires à valider': 'Angona tokana tokony hohamarinina',
+  'Donnée unitaire à validé': 'Angona tokana tokony hohamarinina',
   'Recherchez par mot, signification ou région':
       'Mitadiava araka ny teny, dikany na faritra',
   'Recherche par signification active': 'Mandeha ny fikarohana araka ny dikany',
@@ -512,6 +518,9 @@ const Map<String, String> _mg = {
 
   // Libellés autrefois écrits en malagasy dans le code (désormais en français)
   'Bonjour 👋': 'Manao ahoana 👋',
+  'Bonjour à tous': 'Akory aby',
+  'Bonjour à tous !': 'Akory aby',
+  'Comment allez-vous ?': 'Manao ahoana?',
   'Bienvenue !': 'Tongasoa eto !',
   'Patrimoine vivant': 'Lova Velona',
   'Patrimoine intellectuel de Madagascar': "Tahirin-tsain'ny Nosy Madagasikara",
@@ -662,6 +671,8 @@ const Map<String, String> _mg = {
 // ---------------------------------------------------------------------------
 const Map<String, String> _fr = {
   'Malagasy': 'Malgache',
+  'Akory aby': 'Bonjour à tous',
+  'Manao ahoana?': 'Comment allez-vous ?',
 };
 
 // Version en minuscules du dictionnaire (pour les textes en MAJUSCULES)

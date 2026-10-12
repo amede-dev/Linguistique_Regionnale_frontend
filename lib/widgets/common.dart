@@ -319,26 +319,29 @@ class UsageExample extends StatelessWidget {
   final String? translation;
   const UsageExample(this.text, this.translation, {super.key});
   @override
-  Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-            color: a(C.tertiaryFixed, .45),
-            borderRadius: BorderRadius.circular(12)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            const Icon(Icons.format_quote, size: 16, color: C.tertiary),
-            const SizedBox(width: 4),
-            Text("EXEMPLE D'USAGE",
-                style: ts(10, w7, color: C.tertiary, ls: 1)),
-          ]),
-          const SizedBox(height: 6),
-          Text(text, style: ts(14, w6, color: C.onSurface)),
-          if (translation != null) ...[
-            const SizedBox(height: 4),
-            Text(translation!, style: ts(12, w4, color: C.onVariant)),
-          ],
-        ]),
+  Widget build(BuildContext context) => ListenableBuilder(
+        listenable: appState,
+        builder: (context, _) {
+          final french = appState.language == 'Français';
+          final displayed = french ? (translation ?? text) : text;
+          return Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                color: a(C.tertiaryFixed, .45),
+                borderRadius: BorderRadius.circular(12)),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(children: [
+                const Icon(Icons.format_quote, size: 16, color: C.tertiary),
+                const SizedBox(width: 4),
+                Text("EXEMPLE D'USAGE",
+                    style: ts(10, w7, color: C.tertiary, ls: 1)),
+              ]),
+              const SizedBox(height: 6),
+              Text(displayed, style: ts(14, w6, color: C.onSurface)),
+            ]),
+          );
+        },
       );
 }
 
