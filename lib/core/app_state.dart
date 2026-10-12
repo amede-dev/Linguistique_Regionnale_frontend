@@ -220,8 +220,9 @@ class AppState extends ChangeNotifier {
       apiClient.changePassword(currentPassword, newPassword);
 
   Future<Map<String, dynamic>> askAi(String question,
-          {String? region, String? dialect}) =>
-      apiClient.askAi(question, region: region, dialect: dialect);
+          {String? region, String? dialect, String? language}) =>
+      apiClient.askAi(question,
+          region: region, dialect: dialect, language: language ?? this.language);
 }
 
 final appState = AppState();

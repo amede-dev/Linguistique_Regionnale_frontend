@@ -3,7 +3,6 @@ import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
-import 'contribute_screen.dart';
 import 'word_detail_screen.dart';
 import '../core/i18n.dart';
 
@@ -225,15 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              const SizedBox(height: 14),
-              CtaCard(
-                icon: Icons.add_circle_outline,
-                title: 'Participez au patrimoine',
-                subtitle:
-                    "Connaissez-vous un mot ou une expression de votre région ? Partagez-la avec la communauté.",
-                button: 'Proposer un mot de votre région',
-                onTap: () => push(context, const ContributeScreen()),
-              ),
             ]),
       ),
     ]);

@@ -8,8 +8,9 @@ class ApiClient {
               const String.fromEnvironment('API_BASE_URL',
                   defaultValue:
                       'https://linguistique-regionnale-backend.onrender.com/api'),
-          connectTimeout: const Duration(seconds: 8),
-          receiveTimeout: const Duration(seconds: 12),
+          // Render peut mettre jusqu'à une minute à réveiller l'instance gratuite.
+          connectTimeout: const Duration(seconds: 15),
+          receiveTimeout: const Duration(seconds: 90),
           headers: {'Content-Type': 'application/json'},
         ));
   final Dio _dio;
@@ -85,11 +86,12 @@ class ApiClient {
           .data!;
 
   Future<Map<String, dynamic>> askAi(String question,
-      {String? region, String? dialect}) async {
+      {String? region, String? dialect, String? language}) async {
     return (await _dio.post<Map<String, dynamic>>('/ai/ask', data: {
       'question': question,
       if (region != null && region.isNotEmpty) 'region': region,
       if (dialect != null && dialect.isNotEmpty) 'dialect': dialect,
+      if (language != null && language.isNotEmpty) 'language': language,
     })).data!;
   }
 
@@ -103,12 +105,6 @@ class ApiClient {
     await _dio.delete('/favorites/$id');
   }
 
-  Future<List<dynamic>> myContributions() async =>
-      (await _dio.get<List<dynamic>>('/contributions/mine')).data!;
-  Future<Map<String, dynamic>> createContribution(
-          Map<String, dynamic> data) async =>
-      (await _dio.post<Map<String, dynamic>>('/contributions', data: data))
-          .data!;
 }
 
 final apiClient = ApiClient();

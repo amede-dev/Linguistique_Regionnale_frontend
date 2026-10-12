@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
-import '../core/nav.dart';
 import '../core/theme.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
-import 'contribute_screen.dart';
 import '../core/i18n.dart';
 
 class RegionsScreen extends StatefulWidget {
@@ -86,7 +84,7 @@ class _RegionsScreenState extends State<RegionsScreen> {
             if (r.dialects.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text('Dialectes : ${r.dialects}',
+                child: Text('${tr('Dialectes')} : ${r.dialects}',
                     style: ts(12, w6, color: C.onVariant)),
               ),
             for (final w in _greetings(r))
@@ -222,15 +220,6 @@ class _RegionsScreenState extends State<RegionsScreen> {
               ], selected: _zone, onSelect: (z) => setState(() => _zone = z)),
               const SizedBox(height: 12),
               for (final r in list) _card(r),
-              const SizedBox(height: 4),
-              CtaCard(
-                icon: Icons.add_circle_outline,
-                title: "Votre parler manque à l'appel ?",
-                subtitle:
-                    'Aidez-nous à documenter les mots et expressions locales.',
-                button: 'Ajouter un dialecte',
-                onTap: () => push(context, const ContributeScreen()),
-              ),
             ]),
       ),
     ]);

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart' hide Text;
 import 'package:dio/dio.dart';
 import '../core/app_state.dart';
-import '../core/nav.dart';
 import '../core/theme.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
 import '../widgets/word_card.dart';
-import 'contribute_screen.dart';
 import '../core/i18n.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -46,7 +44,8 @@ class _SearchScreenState extends State<SearchScreen> {
       final result = await appState.askAi(question,
           region: appState.searchRegion == appState.allRegionsLabel
               ? null
-              : appState.searchRegion);
+              : appState.searchRegion,
+          language: appState.language);
       if (mounted) {
         setState(() {
           _aiAnswer = '${result['answer'] ?? ''}';
@@ -63,6 +62,21 @@ class _SearchScreenState extends State<SearchScreen> {
       }
     } finally {
       if (mounted) setState(() => _aiBusy = false);
+    }
+  }
+
+  Future<void> _submitSearch() async {
+    if (_ctrl.text.trim().isEmpty) {
+      setState(() => _aiAnswer = null);
+      return;
+    }
+
+    // Les résultats locaux sont prioritaires. L'IA intervient seulement
+    // lorsque le dictionnaire ne contient aucun résultat correspondant.
+    if (_results().isEmpty && !_aiBusy) {
+      await _askAi();
+    } else {
+      setState(() {});
     }
   }
 
@@ -120,6 +134,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(height: 12),
                   TextField(
                     controller: _ctrl,
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: (_) => _submitSearch(),
                     onChanged: (_) => setState(() {
                       _aiAnswer = null;
                     }),
@@ -128,23 +144,6 @@ class _SearchScreenState extends State<SearchScreen> {
                             icon: Icons.search)
                         .copyWith(
                             border: pillBorder, enabledBorder: pillBorder),
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: FilledButton.icon(
-                      onPressed: _aiBusy ? null : _askAi,
-                      icon: _aiBusy
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(strokeWidth: 2))
-                          : const Icon(Icons.auto_awesome, size: 17),
-                      label: Text(_aiBusy ? 'Analyse…' : 'Demander à l’IA'),
-                      style: FilledButton.styleFrom(
-                          backgroundColor: C.primaryContainer,
-                          shape: const StadiumBorder()),
-                    ),
                   ),
                   if (_aiAnswer != null) ...[
                     const SizedBox(height: 10),
@@ -201,7 +200,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       style: ts(13, w7,
                                           color: C.onSecondaryContainer)),
                                   Text(
-                                      'Tapez par ex. « Comment dit-on merci dans le Nord ? » ou décrivez une situation vécue.',
+                                      'Appuyez sur Entrée pour rechercher. Si aucun résultat n’est trouvé, l’IA proposera une réponse.',
                                       style: ts(12, w4,
                                           color: C.onSecondaryContainer)),
                                 ]),
@@ -276,34 +275,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: WordCard(w)),
-                  const SizedBox(height: 8),
-                  CardBox(
-                    color: C.container,
-                    child: Row(children: [
-                      const Icon(Icons.menu_book, color: C.primary, size: 28),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Votre dialecte manque ?',
-                                  style: ts(14, w7)),
-                              Text(
-                                  'Contribuez en enregistrant un mot de votre région.',
-                                  style: ts(12, w4, color: C.onVariant)),
-                            ]),
-                      ),
-                      FilledButton(
-                        onPressed: () =>
-                            push(context, const ContributeScreen()),
-                        style: FilledButton.styleFrom(
-                            backgroundColor: C.primaryContainer,
-                            shape: const StadiumBorder()),
-                        child: Text('Contribuer',
-                            style: ts(12, w7, color: Colors.white)),
-                      ),
-                    ]),
-                  ),
                 ]),
           ),
         ]);

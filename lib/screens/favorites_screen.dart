@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart' hide Text;
 import '../core/app_state.dart';
-import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
 import '../widgets/word_card.dart';
-import 'contribute_screen.dart';
 import '../core/i18n.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -152,14 +150,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: WordCard(w, removable: true)),
-                  CtaCard(
-                    icon: Icons.add_circle_outline,
-                    title: 'Enrichissez le dictionnaire',
-                    subtitle:
-                        'Proposez un mot ou une expression de votre région.',
-                    button: 'Participer',
-                    onTap: () => push(context, const ContributeScreen()),
-                  ),
                 ]),
           ),
         ]);

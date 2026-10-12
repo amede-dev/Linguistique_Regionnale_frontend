@@ -220,6 +220,26 @@ const Map<String, String> _mg = {
   'Notifications quotidiennes': "Fampilazana isan'andro",
   'Mots du jour & validation des propositions':
       'Teny androany sy fanamarinana ny tolo-kevitra',
+  'Modifier le mot de passe': 'Ovay ny teny miafina',
+  'Changez le mot de passe de votre compte':
+      'Ovay ny teny miafina amin’ny kaontinao',
+  'Supprimer définitivement mon compte': 'Fafao tanteraka ny kaontiko',
+  'Supprimer le compte': 'Fafao ny kaonty',
+  'Votre compte, vos favoris, vos contributions et votre photo seront définitivement supprimés.':
+      'Ho voafafa tanteraka ny kaontinao, ny ankafizinao, ny fandraisanao anjara ary ny sarinao.',
+  'Supprimer': 'Fafao',
+  'Compte supprimé': 'Voafafa ny kaonty',
+  'Suppression impossible pour le moment':
+      'Tsy azo fafana amin’izao fotoana izao',
+  'Sécurisez votre compte': 'Arovy ny kaontinao',
+  'Utilisez au moins 8 caractères pour votre nouveau mot de passe.':
+      'Mampiasà tarehintsoratra 8 farafahakeliny ho an’ny teny miafina vaovao.',
+  'Mot de passe actuel': 'Teny miafina ankehitriny',
+  'Nouveau mot de passe': 'Teny miafina vaovao',
+  'Mot de passe modifié avec succès': 'Voaova soa aman-tsara ny teny miafina',
+  'Ancien mot de passe incorrect ou mot de passe invalide.':
+      'Diso na tsy manan-kery ny teny miafina taloha.',
+  'Impossible de modifier le mot de passe.': 'Tsy azo ovaina ny teny miafina.',
   'Se déconnecter': 'Hiala',
   'Voulez-vous vraiment vous déconnecter de votre compte ?':
       "Tena te hiala amin'ny kaontinao ve ianao?",
@@ -227,7 +247,7 @@ const Map<String, String> _mg = {
   'Prendre une photo': 'Maka sary',
   'Supprimer la photo': 'Fafana ny sary',
   "Impossible d'accéder à la photo": "Tsy afaka miditra amin'ny sary",
-  'Langue malgache • Version 1.2.0': 'Linguistique Régionale • Andiany 1.2.0',
+  'Langue malgache • Version 1.2.0': 'Fiteny Malagasy • Andiany 1.2.0',
   'Aucune nouvelle notification': 'Tsy misy fampilazana vaovao',
 
   // Connexion / inscription
@@ -327,9 +347,19 @@ const Map<String, String> _mg = {
   "Vue d'ensemble": 'Topimaso ankapobeny',
 
   // Recherche
+  'RECHERCHE DU DICTIONNAIRE': 'FIKAROHANA AO AMIN’NY RAKIBOLANA',
   'Que recherchez-vous ?': 'Inona no tadiavinao?',
   'Rechercher un mot, une expression ou une signification...':
       'Mitadiava teny, fitenenana na dikany...',
+  'Recherchez par mot, signification ou région':
+      'Mitadiava araka ny teny, dikany na faritra',
+  'Recherche par signification active': 'Mandeha ny fikarohana araka ny dikany',
+  'Appuyez sur Entrée pour rechercher. Si aucun résultat n’est trouvé, l’IA proposera une réponse.':
+      'Tsindrio ny Entrée hikarohana. Raha tsy misy valiny, dia hanome valiny ny IA.',
+  'Réponse mémorisée': 'Valiny voatahiry',
+  'Réponse de l’IA': 'Valin’ny IA',
+  'Réponse à vérifier avant publication.':
+      'Tokony hohamarinina alohan’ny hamoahana azy.',
   'Rechercher un mot, proverbe, région…': 'Mitadiava teny, ohabolana, faritra…',
   'Recherche phonétique, régionale ou par concept IA':
       "Fikarohana amin'ny feo, faritra na hevitra IA",
@@ -374,6 +404,30 @@ const Map<String, String> _mg = {
   // Régions
   'Régions Linguistiques': "Faritry ny fiteny",
   'Régions linguistiques': "Faritry ny fiteny",
+  'Dialectes': 'Fitenim-paritra',
+  'mots': 'teny',
+  'expressions': 'fitenenana',
+  'dialectes': 'fitenim-paritra',
+  'Au revoir': 'Veloma',
+  'Dialecte documenté': 'Fitenim-paritra voarakitra',
+  'Dialecte à documenter': 'Fitenim-paritra tokony horaketina',
+  'Dialecte à documenter.': 'Fitenim-paritra tokony horaketina.',
+  'À documenter': 'Tokony horaketina',
+  'Région centrale': 'Faritra afovoany',
+  'Région septentrionale': 'Faritra avaratra',
+  'Région méridionale': 'Faritra atsimo',
+  'Région orientale': 'Faritra atsinanana',
+  'Région occidentale': 'Faritra andrefana',
+  'Centre': 'Afovoany',
+  'Nord-Est': 'Avaratra-Atsinanana',
+  'Nord-Ouest': 'Avaratra-Andrefana',
+  'Sud': 'Atsimo',
+  'Sud des Hautes terres': 'Atsimon’ny Tany avo',
+  'Sud-Ouest': 'Atsimo-Andrefana',
+  'Hautes terres': 'Tany avo',
+  'Moyen-Ouest': 'Andrefana afovoany',
+  'Données en cours de documentation': 'Mbola an-dalam-panoratana ny angona',
+  'Bientôt disponible': 'Ho hita tsy ho ela',
   'ATLAS VIVANT': 'ATLASY VELONA',
   'Carte Linguistique': "Sarintanin'ny fiteny",
   'Région (Nord à Sud)': 'Faritra (Avaratra mankany Atsimo)',
@@ -470,7 +524,7 @@ const Map<String, String> _mg = {
   'Bienvenue !': 'Tongasoa eto !',
   'Patrimoine vivant': 'Lova Velona',
   'Patrimoine intellectuel de Madagascar': "Tahirin-tsain'ny Nosy Madagasikara",
-  'LANGUE MALGACHE': 'LINGUISTIQUE RÉGIONALE',
+  'LANGUE MALGACHE': 'TENY MALAGASY',
   'Recherche de mots': 'Fikarohana Teny',
   'PATRIMOINE NATIONAL VIVANT': 'HAREM-PIRENENA VELONA',
   '23 régions': '23 Faritra',

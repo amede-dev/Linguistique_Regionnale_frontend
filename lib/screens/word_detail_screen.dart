@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart' hide Text;
 import 'package:flutter/services.dart';
 import '../core/app_state.dart';
-import '../core/nav.dart';
 import '../core/theme.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
-import 'contribute_screen.dart';
 import '../core/i18n.dart';
 
 class WordDetailScreen extends StatefulWidget {
@@ -202,10 +200,6 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
               ),
             ],
             const SizedBox(height: 18),
-            PBtn('Proposer une variante pour ma région',
-                icon: Icons.add_circle_outline,
-                onTap: () => push(context, const ContributeScreen())),
-            const SizedBox(height: 8),
             Center(
               child: TextButton.icon(
                 onPressed: () =>
