@@ -397,6 +397,13 @@ const Map<String, String> _mg = {
   'Donnée unitaire à valider': 'Angona tokana tokony hohamarinina',
   'Données unitaires à valider': 'Angona tokana tokony hohamarinina',
   'Donnée unitaire à validé': 'Angona tokana tokony hohamarinina',
+  'Bonjour, comment allez-vous ?': 'Manao ahoana, manao ahoana ianao?',
+  'Bonjour, madame / monsieur !': 'Manao ahoana, tompoko!',
+  'Bonjour, madame/monsieur !': 'Manao ahoana, tompoko!',
+  'Forme à valider par des locuteurs de la région':
+      "Endrika tokony hohamarinin'ny mpiteny ao amin'ny faritra.",
+  'Forme à valider par des locuteurs de la région.':
+      "Endrika tokony hohamarinin'ny mpiteny ao amin'ny faritra.",
   'Recherchez par mot, signification ou région':
       'Mitadiava araka ny teny, dikany na faritra',
   'Recherche par signification active': 'Mandeha ny fikarohana araka ny dikany',
@@ -673,6 +680,11 @@ const Map<String, String> _fr = {
   'Malagasy': 'Malgache',
   'Akory aby': 'Bonjour à tous',
   'Manao ahoana?': 'Comment allez-vous ?',
+  'Manao ahoana, manao ahoana ianao?': 'Bonjour, comment allez-vous ?',
+  'Manao ahoana, tompoko!': 'Bonjour, madame / monsieur !',
+  'Manao ahoana, tompoko !': 'Bonjour, madame / monsieur !',
+  "Endrika tokony hohamarinin'ny mpiteny ao amin'ny faritra.":
+      'Forme à valider par des locuteurs de la région',
 };
 
 // Version en minuscules du dictionnaire (pour les textes en MAJUSCULES)
