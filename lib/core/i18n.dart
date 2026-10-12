@@ -483,7 +483,6 @@ const Map<String, String> _mg = {
   'Bientôt disponible': 'Ho hita tsy ho ela',
   'ATLAS VIVANT': 'ATLASY VELONA',
   'Carte Linguistique': "Sarintanin'ny fiteny",
-  'Région (Nord à Sud)': 'Faritra (Avaratra mankany Atsimo)',
   'Par région': 'Isaky ny faritra',
   'Parcourez les 23 régions administratives et leurs parlers':
       "Jereo ny faritra 23 sy ny fitenin'izy ireo",
