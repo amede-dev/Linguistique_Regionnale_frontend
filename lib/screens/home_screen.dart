@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart' hide Text;
-import 'package:flutter/material.dart' as m show Text;
 import '../core/app_state.dart';
-import '../core/nav.dart';
 import '../core/theme.dart';
 import '../widgets/common.dart';
-import 'word_detail_screen.dart';
 import '../core/i18n.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,19 +11,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _cat = 'Tous';
-  static const _cats = [
-    'Tous',
-    'Salutations',
-    'Proverbes (Ohabolana)',
-    'Famille & Respect'
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final trending = appState.words
-        .where((w) => w.trending && (_cat == 'Tous' || w.category == _cat))
-        .toList();
     return Column(children: [
       const TabHeader(title: 'Accueil'),
       Expanded(
@@ -160,71 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 22),
-              Row(children: [
-                const Icon(Icons.trending_up, color: C.primary),
-                const SizedBox(width: 8),
-                Text('Mots Tendance', style: ts(18, w6)),
-                const Spacer(),
-                Text('Cette semaine', style: ts(11, w5, color: C.onVariant)),
-              ]),
-              const SizedBox(height: 10),
-              ChipsRow(
-                  items: _cats,
-                  selected: _cat,
-                  onSelect: (c) => setState(() => _cat = c)),
-              const SizedBox(height: 10),
-              if (trending.isEmpty)
-                Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Center(
-                        child: Text('Aucun mot tendance dans cette catégorie.',
-                            style: ts(13, w4, color: C.onVariant)))),
-              for (final w in trending)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: ListenableBuilder(
-                    listenable: appState,
-                    builder: (context, _) => CardBox(
-                      padding: const EdgeInsets.all(12),
-                      onTap: () => push(context, WordDetailScreen(word: w)),
-                      child: Row(children: [
-                        Expanded(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  Flexible(
-                                      flex: 3,
-                                      child: m.Text(malagasyContent(w.term),
-                                          overflow: TextOverflow.ellipsis,
-                                          style: ts(16, w7))),
-                                  const SizedBox(width: 8),
-                                  Flexible(
-                                      flex: 2,
-                                      child: Pill(w.dialect,
-                                          bg: C.tertiaryFixed, fg: C.tertiary)),
-                                ]),
-                                m.Text(malagasyContent(w.meaning),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: ts(12, w4, color: C.onVariant)),
-                              ]),
-                        ),
-                        IconButton(
-                          onPressed: () => appState.toggleFav(w.id),
-                          icon: Icon(
-                              appState.isFav(w.id)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_border,
-                              color: appState.isFav(w.id)
-                                  ? C.tertiaryContainer
-                                  : C.outline),
-                        ),
-                      ]),
-                    ),
-                  ),
-                ),
             ]),
       ),
     ]);
