@@ -215,8 +215,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     TextButton(
                       onPressed: () {
                         _ctrl.clear();
+                        setState(() {
+                          _aiAnswer = null;
+                          _aiCached = false;
+                        });
                         appState.setSearchRegion(appState.allRegionsLabel);
                         appState.setSearchType('Tous types');
+                        appState.setSort('Pertinence');
                       },
                       child: Text('Réinitialiser',
                           style: ts(12, w6, color: C.primary)),
