@@ -385,6 +385,52 @@ class AuthTabs extends StatelessWidget {
       );
 }
 
+class OptionTabs extends StatelessWidget {
+  final String first, second;
+  final bool firstSelected;
+  final VoidCallback onFirst, onSecond;
+
+  const OptionTabs({
+    super.key,
+    required this.first,
+    required this.second,
+    required this.firstSelected,
+    required this.onFirst,
+    required this.onSecond,
+  });
+
+  Widget _tab(String label, bool selected, VoidCallback onTap) => Expanded(
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            height: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected ? C.lowest : Colors.transparent,
+              borderRadius: BorderRadius.circular(99),
+              boxShadow: selected
+                  ? const [BoxShadow(color: Color(0x14000000), blurRadius: 6)]
+                  : null,
+            ),
+            child: Text(label,
+                style: ts(13, w7, color: selected ? C.primary : C.onVariant)),
+          ),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+            color: C.container, borderRadius: BorderRadius.circular(99)),
+        child: Row(children: [
+          _tab(first, firstSelected, onFirst),
+          _tab(second, !firstSelected, onSecond),
+        ]),
+      );
+}
+
 class SocialBtn extends StatelessWidget {
   final String label;
   final Widget leading;

@@ -118,22 +118,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   style: ts(13, w4, color: C.onVariant)),
               const SizedBox(height: 18),
               if (!_sent)
-                Row(children: [
-                  Expanded(
-                    child: ChoiceChip(
-                      label: const Text('E-mail'),
-                      selected: !_sms,
-                      onSelected: (_) => setState(() => _sms = false),
-                    ),
-                  ),
-                  Expanded(
-                    child: ChoiceChip(
-                      label: const Text('SMS'),
-                      selected: _sms,
-                      onSelected: (_) => setState(() => _sms = true),
-                    ),
-                  ),
-                ]),
+                OptionTabs(
+                  first: 'E-mail',
+                  second: 'SMS',
+                  firstSelected: !_sms,
+                  onFirst: () => setState(() => _sms = false),
+                  onSecond: () => setState(() => _sms = true),
+                ),
               FieldLabel(_sms ? 'Numéro de téléphone' : 'Adresse e-mail'),
               if (_sms)
                 TextFormField(
