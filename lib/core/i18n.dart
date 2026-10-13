@@ -378,7 +378,6 @@ const Map<String, String> _mg = {
   'Sélectionnez votre région': 'Fidio ny faritrao',
   'Connectez-vous pour retrouver vos favoris, synchroniser vos données et participer à la communauté.':
       'Midira mba hahita ny ankafizinao, hampifanaraka ny angonao ary handray anjara amin’ny fiarahamonina.',
-  'Mots Tendance': 'Teny malaza',
   'Tout voir': 'Hijery rehetra',
   'PERLE DU JOUR': 'TENY TSARA ANDROANY',
   'MOT DU JOUR': 'TENY ANDROANY',

@@ -18,7 +18,6 @@ class Word {
       note;
   final String? example, exampleFr, etymology;
   final int popularity;
-  final bool trending;
   final List<Variant> variants;
 
   const Word({
@@ -35,7 +34,6 @@ class Word {
     this.exampleFr,
     this.etymology,
     this.popularity = 50,
-    this.trending = false,
     this.variants = const [],
   });
 
@@ -53,7 +51,6 @@ class Word {
         exampleFr: j['example_fr'] as String?,
         etymology: j['etymology'] as String?,
         popularity: (j['popularity'] as num?)?.toInt() ?? 0,
-        trending: j['trending'] == true,
       );
 }
 
