@@ -10,8 +10,7 @@ class AppState extends ChangeNotifier {
   String userName = '', userEmail = '', userPhone = '', userRegion = '';
   int tab = 0;
   String searchRegion = 'Toutes les régions',
-      searchType = 'Tous types',
-      sort = 'Pertinence';
+      searchType = 'Tous types';
   final Set<String> favorites = {};
   bool notifications = true, offline = false;
   String language = 'Français';
@@ -131,11 +130,6 @@ class AppState extends ChangeNotifier {
 
   void setSearchType(String v) {
     searchType = v;
-    notifyListeners();
-  }
-
-  void setSort(String v) {
-    sort = v;
     notifyListeners();
   }
 

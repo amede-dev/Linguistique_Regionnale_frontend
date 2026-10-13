@@ -25,8 +25,6 @@ class _SearchScreenState extends State<SearchScreen> {
     'Mots isolés',
     'Proverbes (Ohabolana)'
   ];
-  static const _sorts = ['Pertinence', 'Région (Nord à Sud)', 'Popularité'];
-
   @override
   void dispose() {
     _ctrl.dispose();
@@ -95,18 +93,6 @@ class _SearchScreenState extends State<SearchScreen> {
           w.region.toLowerCase().contains(q);
       return okRegion && okType && okQ;
     }).toList();
-    switch (appState.sort) {
-      case 'Région (Nord à Sud)':
-        list.sort((a, b) => appState
-            .regionOrder(a.region)
-            .compareTo(appState.regionOrder(b.region)));
-        break;
-      case 'Popularité':
-        list.sort((a, b) => b.popularity.compareTo(a.popularity));
-        break;
-      default:
-        break;
-    }
     return list;
   }
 
@@ -144,7 +130,20 @@ class _SearchScreenState extends State<SearchScreen> {
                             'Rechercher un mot, une expression ou une signification...',
                             icon: Icons.search)
                         .copyWith(
-                            border: pillBorder, enabledBorder: pillBorder),
+                            border: pillBorder,
+                            enabledBorder: pillBorder,
+                            suffixIcon: _ctrl.text.isEmpty
+                                ? null
+                                : IconButton(
+                                    tooltip: 'Effacer',
+                                    onPressed: () {
+                                      _ctrl.clear();
+                                      setState(() {
+                                        _aiAnswer = null;
+                                        _aiCached = false;
+                                      });
+                                    },
+                                    icon: const Icon(Icons.close))),
                   ),
                   if (_aiAnswer != null) ...[
                     const SizedBox(height: 10),
@@ -221,7 +220,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                         appState.setSearchRegion(appState.allRegionsLabel);
                         appState.setSearchType('Tous types');
-                        appState.setSort('Pertinence');
                       },
                       child: Text('Réinitialiser',
                           style: ts(12, w6, color: C.primary)),
@@ -245,23 +243,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     Text('${res.length}', style: ts(14, w7, color: C.primary)),
                     Text(' résultats trouvés',
                         style: ts(13, w4, color: C.onVariant)),
-                    const Spacer(),
-                    PopupMenuButton<String>(
-                      onSelected: appState.setSort,
-                      color: C.lowest,
-                      itemBuilder: (_) => [
-                        for (final s in _sorts)
-                          PopupMenuItem(
-                              value: s, child: Text(s, style: ts(13, w5)))
-                      ],
-                      child: Row(children: [
-                        Text('Tri : ', style: ts(12, w4, color: C.onVariant)),
-                        Text(appState.sort,
-                            style: ts(12, w7, color: C.primary)),
-                        const Icon(Icons.expand_more,
-                            size: 18, color: C.primary),
-                      ]),
-                    ),
                   ]),
                   const SizedBox(height: 10),
                   if (res.isEmpty)
