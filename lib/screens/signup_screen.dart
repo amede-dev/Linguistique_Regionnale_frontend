@@ -189,7 +189,7 @@ class _SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 controller: _phone,
                 keyboardType: TextInputType.phone,
-                decoration: fieldDec('0382099195', icon: Icons.phone_outlined),
+                decoration: fieldDec('03XXXXXXXX', icon: Icons.phone_outlined),
                 validator: (v) => RegExp(r'^(?:0|\+261|261)3\d{8}$')
                         .hasMatch((v ?? '').replaceAll(RegExp(r'[\s()-]'), ''))
                     ? null

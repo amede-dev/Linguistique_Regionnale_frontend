@@ -73,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.phone,
-          decoration: fieldDec('0382099195', icon: Icons.phone_outlined),
+          decoration: fieldDec('03XXXXXXXX', icon: Icons.phone_outlined),
         ),
         actions: [
           TextButton(
