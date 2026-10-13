@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import 'package:flutter/services.dart';
 import '../core/app_state.dart';
 import '../core/theme.dart';
@@ -119,16 +120,17 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
             ),
             if (w.phonetic.isNotEmpty)
               Text(w.phonetic, style: ts(13, w5, color: C.outline, ls: .4)),
-            Text(w.term.toUpperCase(),
+            m.Text(malagasyContent(w.term).toUpperCase(),
                 style: ts(34, w7, color: C.primary, ls: -.5, height: 1.15)),
             const SizedBox(height: 8),
-            Text(w.meaning, style: ts(15, w4)),
+            m.Text(malagasyContent(w.meaning), style: ts(15, w4)),
             const SizedBox(height: 14),
             CardBox(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(w.note, style: ts(12, w4, color: C.onVariant)),
+                    m.Text(malagasyContent(w.note),
+                        style: ts(12, w4, color: C.onVariant)),
                     const SizedBox(height: 10),
                     Row(children: [
                       const Icon(Icons.location_on, size: 16, color: C.primary),

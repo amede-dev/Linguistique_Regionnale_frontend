@@ -26,6 +26,10 @@ String tr(String s) {
   return out == null ? s : '$lead$out$trail';
 }
 
+/// Contenu linguistique de la base : il reste en Malagasy quelle que soit
+/// la langue choisie pour les libellés de l'interface.
+String malagasyContent(String s) => _toMalagasy(s) ?? s;
+
 String? _toMalagasy(String core) {
   final direct = _mg[core];
   if (direct != null) return direct;
@@ -524,8 +528,10 @@ const Map<String, String> _mg = {
   // Libellés autrefois écrits en malagasy dans le code (désormais en français)
   'Bonjour 👋': 'Manao ahoana 👋',
   'Bonjour': 'Manao ahoana',
+  'Bonjour.': 'Manao ahoana.',
   'Bonjour !': 'Manao ahoana!',
   'Salut': 'Salama',
+  'Salut.': 'Salama.',
   'Salut !': 'Salama!',
   'Bonjour à tous': 'Akory aby',
   'Bonjour à tous !': 'Akory aby',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
@@ -41,11 +42,13 @@ class WordCard extends StatelessWidget {
               ),
             ]),
             const SizedBox(height: 6),
-            Text(word.term, style: ts(22, w7, color: C.primary, height: 1.2)),
+            m.Text(malagasyContent(word.term),
+                style: ts(22, w7, color: C.primary, height: 1.2)),
             if (word.phonetic.isNotEmpty)
               Text(word.phonetic, style: ts(12, w5, color: C.outline, ls: .3)),
             const SizedBox(height: 8),
-            Text(word.meaning, style: ts(14, w4, color: C.onSurface)),
+            m.Text(malagasyContent(word.meaning),
+                style: ts(14, w4, color: C.onSurface)),
             if (word.example != null) ...[
               const SizedBox(height: 10),
               UsageExample(word.example!, word.exampleFr),
@@ -55,7 +58,7 @@ class WordCard extends StatelessWidget {
               const Icon(Icons.verified, size: 15, color: C.secondary),
               const SizedBox(width: 4),
               Expanded(
-                  child: Text(word.note,
+                  child: m.Text(malagasyContent(word.note),
                       overflow: TextOverflow.ellipsis,
                       style: ts(11, w5, color: C.secondary))),
               if (removable)

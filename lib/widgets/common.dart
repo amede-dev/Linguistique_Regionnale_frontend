@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import '../core/app_state.dart';
 import '../core/i18n.dart';
 import '../core/theme.dart';
@@ -322,8 +323,7 @@ class UsageExample extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
         listenable: appState,
         builder: (context, _) {
-          final french = appState.language == 'Français';
-          final displayed = french ? (translation ?? text) : text;
+          final displayed = malagasyContent(text);
           return Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
@@ -338,7 +338,7 @@ class UsageExample extends StatelessWidget {
                     style: ts(10, w7, color: C.tertiary, ls: 1)),
               ]),
               const SizedBox(height: 6),
-              Text(displayed, style: ts(14, w6, color: C.onSurface)),
+              m.Text(displayed, style: ts(14, w6, color: C.onSurface)),
             ]),
           );
         },

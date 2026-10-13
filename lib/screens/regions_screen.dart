@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import '../core/app_state.dart';
 import '../core/theme.dart';
 import '../data/models.dart';
@@ -94,10 +95,10 @@ class _RegionsScreenState extends State<RegionsScreen> {
                   Pill(w.category, bg: C.tertiaryFixed, fg: C.tertiary),
                   const SizedBox(width: 8),
                   Expanded(
-                      child: Text(
+                      child: m.Text(
                           w.phonetic.isEmpty
-                              ? w.term
-                              : '${w.term}  [${w.phonetic}]',
+                              ? malagasyContent(w.term)
+                              : '${malagasyContent(w.term)}  [${w.phonetic}]',
                           style: ts(13, w6))),
                 ]),
               ),

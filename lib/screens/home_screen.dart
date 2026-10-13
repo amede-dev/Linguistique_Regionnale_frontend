@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import '../core/app_state.dart';
 import '../core/nav.dart';
 import '../core/theme.dart';
@@ -195,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Row(children: [
                                   Flexible(
                                       flex: 3,
-                                      child: Text(w.term,
+                                      child: m.Text(malagasyContent(w.term),
                                           overflow: TextOverflow.ellipsis,
                                           style: ts(16, w7))),
                                   const SizedBox(width: 8),
@@ -204,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Pill(w.dialect,
                                           bg: C.tertiaryFixed, fg: C.tertiary)),
                                 ]),
-                                Text(w.meaning,
+                                m.Text(malagasyContent(w.meaning),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: ts(12, w4, color: C.onVariant)),
