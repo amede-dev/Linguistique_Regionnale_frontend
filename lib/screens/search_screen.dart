@@ -45,6 +45,9 @@ class _SearchScreenState extends State<SearchScreen> {
               ? null
               : appState.searchRegion,
           language: appState.language);
+      // L'IA peut maintenant créer automatiquement le mot et ses variantes.
+      // Recharge le catalogue pour les rendre visibles sans redémarrer l'app.
+      await appState.loadCatalog();
       if (mounted) {
         setState(() {
           _aiAnswer = '${result['answer'] ?? ''}';
@@ -243,8 +246,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     if (_aiAnswer != null) ...[
                       Text('Réponse IA',
                           style: ts(13, w7, color: C.primary)),
-                      Text(' — aucun résultat local',
-                          style: ts(13, w4, color: C.onVariant)),
+                      if (res.isEmpty)
+                        Text(' — aucun résultat local',
+                            style: ts(13, w4, color: C.onVariant)),
                     ] else ...[
                       Text('${res.length}',
                           style: ts(14, w7, color: C.primary)),

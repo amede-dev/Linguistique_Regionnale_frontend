@@ -4,6 +4,14 @@ class Variant {
   final String area, forms, text, nuance;
   final int consensus;
   const Variant(this.area, this.forms, this.text, this.nuance, this.consensus);
+
+  factory Variant.fromJson(Map<String, dynamic> j) => Variant(
+        '${j['area'] ?? ''}',
+        '${j['forms'] ?? ''}',
+        '${j['text'] ?? ''}',
+        '${j['nuance'] ?? ''}',
+        (j['consensus'] as num?)?.toInt() ?? 0,
+      );
 }
 
 class Word {
@@ -51,6 +59,10 @@ class Word {
         exampleFr: j['example_fr'] as String?,
         etymology: j['etymology'] as String?,
         popularity: (j['popularity'] as num?)?.toInt() ?? 0,
+        variants: (j['variants'] as List<dynamic>? ?? const [])
+            .whereType<Map>()
+            .map((e) => Variant.fromJson(Map<String, dynamic>.from(e)))
+            .toList(),
       );
 }
 
