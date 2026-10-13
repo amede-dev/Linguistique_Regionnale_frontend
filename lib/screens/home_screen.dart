@@ -85,18 +85,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ]),
               const SizedBox(height: 8),
-              SizedBox(
-                height: 148,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
+              GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: appState.regions.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 1.08,
+                  ),
                   itemBuilder: (_, i) {
                     final r = appState.regions[i];
                     return GestureDetector(
                       onTap: () => appState.openSearch(region: r.name),
                       child: Container(
-                        width: 176,
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                             color: C.lowest,
@@ -145,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-              ),
             ]),
       ),
     ]);
