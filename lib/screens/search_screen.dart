@@ -240,12 +240,20 @@ class _SearchScreenState extends State<SearchScreen> {
                       onSelect: appState.setSearchType),
                   const SizedBox(height: 12),
                   Row(children: [
-                    Text('${res.length}', style: ts(14, w7, color: C.primary)),
-                    Text(' résultats trouvés',
-                        style: ts(13, w4, color: C.onVariant)),
+                    if (_aiAnswer != null) ...[
+                      Text('Réponse IA',
+                          style: ts(13, w7, color: C.primary)),
+                      Text(' — aucun résultat local',
+                          style: ts(13, w4, color: C.onVariant)),
+                    ] else ...[
+                      Text('${res.length}',
+                          style: ts(14, w7, color: C.primary)),
+                      Text(' résultats trouvés',
+                          style: ts(13, w4, color: C.onVariant)),
+                    ],
                   ]),
                   const SizedBox(height: 10),
-                  if (res.isEmpty)
+                  if (res.isEmpty && _aiAnswer == null)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Column(children: [
