@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import 'package:dio/dio.dart';
 import '../core/app_state.dart';
 import '../core/theme.dart';
@@ -166,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     style: ts(13, w7,
                                         color: C.onSecondaryContainer)),
                                 const SizedBox(height: 4),
-                                Text(_aiAnswer!,
+                                m.Text(malagasyContent(_aiAnswer!),
                                     style: ts(13, w4,
                                         color: C.onSecondaryContainer)),
                                 const SizedBox(height: 5),
