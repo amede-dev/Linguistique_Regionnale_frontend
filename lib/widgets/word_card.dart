@@ -36,7 +36,16 @@ class WordCard extends StatelessWidget {
               ),
               IconButton(
                 visualDensity: VisualDensity.compact,
-                onPressed: () => appState.toggleFav(word.id),
+                onPressed: () async {
+                  try {
+                    await appState.toggleFav(word.id);
+                  } catch (e) {
+                    if (context.mounted) {
+                      toast(context,
+                          e.toString().replaceFirst('Bad state: ', ''));
+                    }
+                  }
+                },
                 icon: Icon(fav ? Icons.favorite : Icons.favorite_border,
                     color: fav ? C.primaryContainer : C.outline),
               ),

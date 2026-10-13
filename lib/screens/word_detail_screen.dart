@@ -99,7 +99,15 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
                     child: Text('${w.category} • Interjection'.toUpperCase(),
                         style: ts(11, w7, color: C.tertiary, ls: 1))),
                 IconButton(
-                  onPressed: () => appState.toggleFav(w.id),
+                  onPressed: () async {
+                    try {
+                      await appState.toggleFav(w.id);
+                    } catch (e) {
+                      if (context.mounted) {
+                        toast(context, e.toString().replaceFirst('Bad state: ', ''));
+                      }
+                    }
+                  },
                   icon: Icon(
                       appState.isFav(w.id)
                           ? Icons.favorite

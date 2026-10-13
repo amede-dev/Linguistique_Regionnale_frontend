@@ -141,14 +141,29 @@ class AppState extends ChangeNotifier {
 
   bool isFav(String id) => favorites.contains(id);
   Future<void> toggleFav(String id) async {
-    if (favorites.contains(id)) {
-      await apiClient.removeFavorite(id);
+    if (!loggedIn) throw StateError('Connectez-vous pour utiliser les favoris.');
+    final wasFavorite = favorites.contains(id);
+    if (wasFavorite) {
       favorites.remove(id);
     } else {
-      await apiClient.addFavorite(id);
       favorites.add(id);
     }
     notifyListeners();
+    try {
+      if (wasFavorite) {
+        await apiClient.removeFavorite(id);
+      } else {
+        await apiClient.addFavorite(id);
+      }
+    } catch (e) {
+      if (wasFavorite) {
+        favorites.add(id);
+      } else {
+        favorites.remove(id);
+      }
+      notifyListeners();
+      rethrow;
+    }
   }
 
   void setNotifications(bool v) {
